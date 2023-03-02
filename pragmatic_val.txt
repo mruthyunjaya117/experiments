@@ -1,0 +1,4983 @@
+Do you ever get the feeling that your project is doomed, even before it starts?
+Sometimes it might be, unless you establish some basic ground rules first.
+Otherwise, you might as well suggest that it be shut down now, and save
+the sponsor some money.
+At the very beginning of a project, you'll need to determine the
+requirements. Simply listening to users is not enough: read The
+Requirements Pit to find out more.
+Conventional wisdom and constraint management are the topics of Solving
+Impossible Puzzles. Whether you are performing requirements, analysis,
+coding, or testing, difficult problems will crop up. Most of the time, they
+won't be as difficult as they first appear to be.
+When you think you've got the problems solved, you may still not feel
+comfortable with jumping in and starting. Is it simple procrastination, or is
+it something more? Not Until You're Ready offers advice on when it may be
+prudent to listen to that cautionary voice inside your head.
+Starting too soon is one problem, but waiting too long may be even worse. In
+The Specification Trap, we'll discuss the advantages of specification by
+example.
+Finally, we'll look at some of the pitfalls of formal development processes
+and methodologies in Circles and Arrows. No matter how well thought out
+it is, and regardless of which "best practices" it includes, no method can
+replace thinking.
+With these critical issues sorted out before the project gets under way, you
+can be better positioned to avoid "analysis paralysis" and actually begin
+your successful project.
+
+The Requirements Pit
+Perfection is achieved, not when there is nothing left to add, but when there
+is nothing left to take away….
+Antoine de St. Exupery, Wind, Sand, and Stars, 1939
+Many books and tutorials refer to requirements gathering as an early
+phase of the project. The word "gathering" seems to imply a tribe of happy
+analysts, foraging for nuggets of wisdom that are lying on the ground all
+
+around them while the Pastoral Symphony plays gently in the background.
+"Gathering" implies that the requirements are already there—you need
+merely find them, place them in your basket, and be merrily on your way.
+It doesn't quite work that way. Requirements rarely lie on the surface.
+Normally, they're buried deep beneath layers of assumptions,
+misconceptions, and politics.
+Tip 51
+Don't Gather Requirements—Dig for Them
+
+Digging for Requirements
+How can you recognize a true requirement while you're digging through all
+the surrounding dirt? The answer is both simple and complex.
+The simple answer is that a requirement is a statement of something that
+needs to be accomplished. Good requirements might include the following:
+•
+•
+•
+
+An employee record may be viewed only by a nominated group of
+people.
+•
+The cylinder-head temperature must not exceed the critical
+value, which varies by engine.
+•
+The editor will highlight keywords, which will be selected
+depending on the type of file being edited.
+•
+
+However, very few requirements are as clear-cut, and that's what makes
+requirements analysis complex.
+The first statement in the list above may have been stated by the users as
+"Only an employee's supervisors and the personnel department may view
+that employee's records." Is this statement truly a requirement? Perhaps
+today, but it embeds business policy in an absolute statement. Policies
+change regularly, so we probably don't want to hardwire them into our
+requirements. Our recommendation is to document these policies
+separately from the requirement, and hyperlink the two. Make the
+requirement the general statement, and give the developers the policy
+information as an example of the type of thing they'll need to support in the
+implementation. Eventually, policy may end up as metadata in the
+application.
+
+This is a relatively subtle distinction, but it's one that will have profound
+implications for the developers. If the requirement is stated as "Only
+personnel can view an employee record," the developer may end up coding
+an explicit test every time the application accesses these files. However, if
+the statement is "Only authorized users may access an employee record,"
+the developer will probably design and implement some kind of access
+control system. When policy changes (and it will), only the metadata for
+that system will need to be updated. In fact, gathering requirements in this
+way naturally leads you to a system that is well factored to support
+metadata.
+The distinctions among requirements, policy, and implementation can get
+very blurred when user interfaces are discussed. "The system must let you
+choose a loan term" is a statement of requirement. "We need a list box to
+select the loan term" may or may not be. If the users absolutely must have a
+list box, then it is a requirement. If instead they are describing the ability to
+choose, but are using listbox as an example, then it may not be. The box on
+page 205 discusses a project that went horribly wrong because the users'
+interface needs were ignored.
+It's important to discover the underlying reason why users do a particular
+thing, rather than just the way they currently do it. At the end of the day,
+your development has to solve their business problem, not just meet their
+stated requirements. Documenting the reasons behind requirements will
+give your team invaluable information when making daily implementation
+decisions.
+There's a simple technique for getting inside your users' requirements that
+isn't used often enough: become a user. Are you writing a system for the
+help desk? Spend a couple of days monitoring the phones with an
+experienced support person. Are you automating a manual stock control
+system? Work in the warehouse for a week.[1] As well as giving you insight
+into how the system will really be used, you'd be amazed at how the request
+"May I sit in for a week while you do your job?" helps build trust and
+establishes a basis for communication with your users. Just remember not
+to get in the way!
+[1] Does a week sound like a long time? It really isn't, particularly when you're looking at processes in which management
+
+and workers occupy different worlds. Management will give you one view of how things operate, but when you get down
+on the floor, you'll find a very different reality—one that will take time to assimilate.
+
+Tip 52
+Work with a User to Think Like a User
+
+The requirements mining process is also the time to start to build a rapport
+with your user base, learning their expectations and hopes for the system
+you are building. See Great Expectations, for more.
+
+Documenting Requirements
+So you are sitting down with the users and prying genuine requirements
+from them. You come across a few likely scenarios that describe what the
+application needs to do. Ever the professional, you want to write these down
+and publish a document that everyone can use as a basis for
+discussions—the developers, the end users, and the project sponsors.
+That's a pretty wide audience.
+Ivar Jacobson [Jac94] proposed the concept of use cases to capture
+requirements. They let you describe a particular use of the system— not in
+terms of user interface, but in a more abstract fashion. Unfortunately,
+Jacobson's book was a little vague on details, so there are now many
+different opinions on what a use case should be. Is it formal or informal,
+simple prose or a structured document (like a form)? What level of detail is
+appropriate (remember we have a wide audience)?
+
+Sometimes the Interface Is the System
+In an article in Wired magazine (January 1999, page 176), producer
+and musician Brian Eno described an incredible piece of
+technology—the ultimate mixing board. It does anything to sound
+that can be done. And yet, instead of letting musicians make better
+music, or produce a recording faster or less expensively, it gets in
+the way; it disrupts the creative process.
+To see why, you have to look at how recording engineers work. They
+balance sounds intuitively. Over the years, they develop an innate
+feedback loop between their fingertips—sliding faders, rotating
+knobs, and so on However, the interface to the new mixer didn't
+leverage off those abilities. Instead, it forced its users to type on a
+keyboard or click a mouse. The functions it provided were
+comprehensive, but they were packaged in unfamiliar and exotic
+ways. The functions the engineers needed were sometimes hidden
+behind obscure names, or were achieved with nonintuitive
+
+combinations of basic facilities.
+That environment has a requirement to leverage existing skill sets.
+While slavishly duplicating what already exists doesn't allow for
+progress, we must be able to provide a transition to the future.
+For example, the recording engineers may have been better served
+by some sort of touchscreen interface—still tactile, still mounted as
+a traditional mixing board might be, yet allowing the software to go
+beyond the realm of fixed knobs and switches. Providing a
+comfortable transition through familiar metaphors is one way to
+help get buy-in.
+This example also illustrates our belief that successful tools adapt
+to the hands that use them. In this case, it is the tools that you build
+for others that must be adaptable.
+One way of looking at use cases is to emphasize their goal-driven nature.
+Alistair Cockburn has a paper that describes this approach, as well as
+templates that can be used (strictly or not) as a starting place ([Coc97a],
+also online at [URL 46]). Figure 7.1 on the following page shows an
+abbreviated example of his template, while Figure 7.2 shows his sample use
+case.
+
+Figure 7.1. Cockburn's use case template
+
+Figure 7.2. A sample use case
+
+By using a formal template as an aide-mémoire, you can be sure that you
+include all the information you need in a use case: performance
+characteristics, other involved parties, priority, frequency, and various
+errors and exceptions that can crop up ("nonfunctional requirements"). This
+is also a great place to record user comments such as "oh, except if we get a
+xxx condition, then we have to do yyy instead." The template also serves as
+a ready-made agenda for meetings with your users.
+This sort of organization supports the hierarchical structuring of use
+cases—nesting more detailed use cases inside higher-level ones. For
+example, post debit and post credit both elaborate on post transaction.
+
+Use Case Diagrams
+Workflow can be captured with UML activity diagrams, and
+conceptual-level class diagrams can sometimes be useful for modeling the
+business at hand. But true use cases are textual descriptions, with a
+hierarchy and cross-links. Use cases can contain hyperlinks to other use
+cases, and they can be nested within each other.
+It seems incredible to us that anyone would seriously consider documenting
+information this dense using only simplistic stick people such as Figure 7.3.
+Don't be a slave to any notation; use whatever method best communicates
+the requirements with your audience.
+
+Figure 7.3. UML use cases—so simple a child could do it!
+
+Overspecifying
+A big danger in producing a requirements document is being too specific.
+Good requirements documents remain abstract. Where requirements are
+concerned, the simplest statement that accurately reflects the business
+need is best. This doesn't mean you can be vague—you must capture the
+underlying semantic invariants as requirements, and document the specific
+or current work practices as policy.
+Requirements are not architecture. Requirements are not design, nor are
+they the user interface. Requirements are need.
+
+Seeing Further
+The Year 2000 problem is often blamed on short-sighted programmers,
+desperate to save a few bytes in the days when mainframes had less
+memory than a modern TV remote control.
+But it wasn't the programmers' doing, and it wasn't really a memory usage
+issue. If anything, it was the system analysts' and designers' fault. The Y2K
+
+problem came about from two main causes: a failure to see beyond current
+business practice, and a violation of the DRY principle.
+Businesses were using the two-digit shortcut long before computers came
+on the scene. It was common practice. The earliest data processing
+applications merely automated existing business processes, and simply
+repeated the mistake. Even if the architecture required two-digit years for
+data input, reporting, and storage, there should have been an abstraction of
+a DATE that "knew" the two digits were an abbreviated form of the real date.
+Tip 53
+Abstractions Live Longer than Details
+
+Does "seeing further" require you to predict the future? No. It means
+generating statements such as
+
+The system makes active use of an abstraction of DATEs. The system will
+implement DATE services, such as formatting, storage, and math
+operations, consistently and universally.
+The requirements will specify only that dates are used. It may hint that
+some math may be done on dates. It may tell you that dates will be stored
+on various forms of secondary storage. These are genuine requirements for
+a DATE module or class.
+
+Just One More Wafer-Thin Mint…
+Many projects failures are blamed on an increase in scope—also known as
+feature bloat, creeping featurism, or requirements creep. This is an aspect
+of the boiled-frog syndrome from Stone Soup and Boiled Frogs. What can
+we do to prevent requirements from creeping up on us?
+In the literature, you will find descriptions of many metrics, such as bugs
+reported and fixed, defect density, cohesion, coupling, function points, lines
+of code, and so on. These metrics may be tracked by hand or with software.
+Unfortunately, not many projects seem to track requirements actively. This
+means that they have no way to report on changes of scope—who requested
+a feature, who approved it, total number of requests approved, and so on.
+The key to managing growth of requirements is to point out each new
+feature's impact on the schedule to the project sponsors. When the project is
+
+a year late from initial estimates and accusations start flying, it can be
+helpful to have an accurate, complete picture of how, and when,
+requirements growth occurred.
+It's easy to get sucked into the "just one more feature" maelstrom, but by
+tracking requirements you can get a clearer picture that "just one more
+feature" is really the fifteenth new feature added this month.
+
+Maintain a Glossary
+As soon as you start discussing requirements, users and domain experts
+will use certain terms that have specific meaning to them. They may
+differentiate between a "client" and a "customer," for example. It would
+then be inappropriate to use either word casually in the system.
+Create and maintain a project glossary—one place that defines all the
+specific terms and vocabulary used in a project. All participants in the
+project, from end users to support staff, should use the glossary to ensure
+consistency. This implies that the glossary needs to be widely accessible—a
+good argument for Web-based documentation (more on that in a moment).
+Tip 54
+Use a Project Glossary
+
+It's very hard to succeed on a project where the users and developers refer
+to the same thing by different names or, even worse, refer to different
+things by the same name.
+
+Get the Word Out
+In It's All Writing, we discuss publishing of project documents to internal
+Web sites for easy access by all participants. This method of distribution is
+particularly useful for requirements documents.
+By presenting requirements as a hypertext document, we can better
+address the needs of a diverse audience—we can give each reader what
+they want. Project sponsors can cruise along at a high level of abstraction to
+ensure that business objectives are met. Programmers can use hyperlinks
+to "drill down" to increasing levels of detail (even referencing appropriate
+definitions or engineering specifications).
+
+Web-based distribution also avoids the typical two-inch-thick binder
+entitled Requirements Analysis that no one ever reads and that becomes
+outdated the instant ink hits paper.
+If it's on the Web, the programmers may even read it.
+
+Related sections include:
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+Stone Soup and Boiled Frogs
+Good-Enough Software
+Circles and Arrows
+It's All Writing
+Great Expectations
+
+Challenges
+•
+
+•
+
+Can you use the software you are writing? Is it possible to have a
+good feel for requirements without being able to use the software
+yourself?
+•
+Pick a non-computer-related problem you currently need to solve.
+Generate requirements for a noncomputer solution.
+•
+
+Exercises
+42. Which of the following are probably genuine requirements? Restate
+those that are not to make them more useful (if possible).
+1. 1. The response time must be less than 500 ms.
+2. 2. Dialog boxes will have a gray background.
+3. 3. The application will be organized as a number of front-end
+processes and a back-end server.
+4. 4. If a user enters non-numeric characters in a numeric field,
+the system will beep and not accept them.
+5. 5. The application code and data must fit within 256kB.
+
+Solving Impossible Puzzles
+Gordius, the King of Phrygia, once tied a knot that no one could untie. It
+was said that he who solved the riddle of the Gordian Knot would rule all of
+Asia. So along comes Alexander the Great, who chops the knot to bits with
+
+his sword. Just a little different interpretation of the requirements, that's
+all… and he did end up ruling most of Asia.
+Every now and again, you will find yourself embroiled in the middle of a
+project when a really tough puzzle comes up: some piece of engineering that
+you just can't get a handle on, or perhaps some bit of code that is turning
+out to be much harder to write than you thought. Maybe it looks impossible.
+But is it really as hard as it seems?
+Consider real-world puzzles—those devious little bits of wood, wrought iron,
+or plastic that seem to turn up as Christmas presents or at garage sales. All
+you have to do is remove the ring, or fit the T-shaped pieces in the box, or
+whatever.
+So you pull on the ring, or try to put the T's in the box, and quickly discover
+that the obvious solutions just don't work. The puzzle can't be solved that
+way. But even though it's obvious, that doesn't stop people from trying the
+same thing—over and over—thinking there must be a way.
+Of course, there isn't. The solution lies elsewhere. The secret to solving the
+puzzle is to identify the real (not imagined) constraints, and find a solution
+therein. Some constraints are absolute; others are merely preconceived
+notions. Absolute constraints must be honored, however distasteful or
+stupid they may appear to be. On the other hand, some apparent
+constraints may not be real constraints at all. For example, there's that old
+bar trick where you take a brand new, unopened champagne bottle and bet
+that you can drink beer out of it. The trick is to turn the bottle upside down,
+and pour a small quantity of beer in the hollow in the bottom of the bottle.
+Many software problems can be just as sneaky.
+
+Degrees of Freedom
+The popular buzz-phrase "thinking outside the box" encourages us to
+recognize constraints that might not be applicable and to ignore them.
+But this phrase isn't entirely accurate. If the "box" is the boundary of
+constraints and conditions, then the trick is to find the box, which may be
+considerably larger than you think.
+The key to solving puzzles is both to recognize the constraints placed on you
+and to recognize the degrees of freedom you do have, for in those you'll find
+your solution. This is why some puzzles are so effective; you may dismiss
+potential solutions too readily.
+
+For example, can you connect all of the dots in the following puzzle and
+return to the starting point with just three straight lines—without lifting
+your pen from the paper or retracing your steps [Hol78]?
+
+You must challenge any preconceived notions and evaluate whether or not
+they are real, hard-and-fast constraints.
+It's not whether you think inside the box or outside the box. The problem
+lies in finding the box—identifying the real constraints.
+Tip 55
+Don't Think Outside the Box—Find the Box
+
+When faced with an intractable problem, enumerate all the possible
+avenues you have before you. Don't dismiss anything, no matter how
+unusable or stupid it sounds. Now go through the list and explain why a
+certain path cannot be taken. Are you sure? Can you prove it?
+Consider the Trojan horse—a novel solution to an intractable problem. How
+do you get troops into a walled city without being discovered? You can bet
+that "through the front door" was initially dismissed as suicide.
+Categorize and prioritize your constraints. When woodworkers begin a
+project, they cut the longest pieces first, then cut the smaller pieces out of
+the remaining wood. In the same manner, we want to identify the most
+restrictive constraints first, and fit the remaining constraints within them.
+By the way, a solution to the Four Posts puzzle is shown on page 307.
+
+There Must Be an Easier Way!
+Sometimes you will find yourself working on a problem that seems much
+harder than you thought it should be. Maybe it feels like you're going down
+the wrong path—that there must be an easier way than this! Perhaps you
+are running late on the schedule now, or even despair of ever getting the
+system to work because this particular problem is "impossible."
+
+That's when you step back a pace and ask yourself these questions:
+•
+
+•
+
+•
+
+•
+
+•
+•
+•
+•
+
+Is there an easier way?
+
+Are you trying to solve the right problem, or have you been
+distracted by a peripheral technicality?
+•
+Why is this thing a problem?
+•
+What is it that's making it so hard to solve?
+•
+Does it have to be done this way?
+•
+Does it have to be done at all?
+
+Many times a surprising revelation will come to you as you try to answer
+one of these questions. Many times a reinterpretation of the requirements
+can make a whole set of problems go away—just like the Gordian knot.
+All you need are the real constraints, the misleading constraints, and the
+wisdom to know the difference.
+
+Challenges
+•
+
+Take a hard look at whatever difficult problem you are
+embroiled in today. Can you cut the Gordian knot? Ask yourself the
+key questions we outlined above, especially "Does it have to be done
+
+•
+
+this way?"
+•
+
+Were you handed a set of constraints when you signed on to your
+current project? Are they all still applicable, and is the interpretation
+of them still valid?
+
+•
+
+Not Until You're Ready
+He who hesitates is sometimes saved.
+James Thurber, The Glass in the Field
+Great performers share a trait: they know when to start and when to wait.
+The diver stands on the high-board, waiting for the perfect moment to jump.
+The conductor stands before the orchestra, arms raised, until she senses
+that the moment is right to start the piece.
+You are a great performer. You too need to listen to the voice that whispers
+"wait." If you sit down to start typing and there's some nagging doubt in
+your mind, heed it.
+Tip 56
+Listen to Nagging Doubts—Start When You're Ready
+
+There used to be a style of tennis coaching called "inner tennis." You'd
+spend hours hitting balls over the net, not particularly trying for accuracy,
+but instead verbalizing just where the ball hit relative to some target (often
+a chair). The idea was that the feedback would train your subconscious and
+reflexes, so that you improved without consciously knowing how or why.
+As a developer, you've been doing the same kind of thing during your entire
+career. You've been trying things and seeing which worked and which
+didn't. You've been accumulating experience and wisdom. When you feel a
+nagging doubt, or experience some reluctance when faced with a task, heed
+it. You may not be able to put your finger on exactly what's wrong, but give
+it time and your doubts will probably crystallize into something more solid,
+something you can address. Software development is still not a science. Let
+your instincts contribute to your performance.
+
+Good Judgment or Procrastination?
+Everyone fears the blank sheet of paper. Starting a new project (or even a
+new module in an existing project) can be an unnerving experience. Many of
+us would prefer to put off making the initial commitment of starting. So
+how can you tell when you're simply procrastinating, rather than
+responsibly waiting for all the pieces to fall into place?
+A technique that has worked for us in these circumstances is to start
+prototyping. Choose an area that you feel will be difficult and begin
+producing some kind of proof of concept. One of two things will typically
+happen. Shortly after starting, you may feel that you're wasting your time.
+This boredom is probably a good indication that your initial reluctance was
+just a desire to put off the commitment to start. Give up on the prototype,
+and hack into the real development.
+On the other hand, as the prototype progresses you may have one of those
+moments of revelation when you suddenly realize that some basic premise
+was wrong. Not only that, but you'll see clearly how you can put it right.
+You'll feel comfortable abandoning the prototype and launching into the
+project proper. Your instincts were right, and you've just saved yourself and
+your team a considerable amount of wasted effort.
+When you make the decision to prototype as a way of investigating your
+unease, be sure to remember why you're doing it. The last thing you want is
+to find yourself several weeks into serious development before
+remembering that you started out writing a prototype.
+
+Somewhat cynically, starting work on a prototype might also be more
+politically acceptable than simply announcing that "I don't feel right about
+starting" and firing up solitaire.
+
+Challenges
+•
+
+Discuss the fear-of-starting syndrome with your colleagues. Do
+others experience the same thing? Do they heed it? What tricks do
+they use to overcome it? Can a group help overcome an individual's
+reluctance, or is that just peer pressure?
+
+•
+
+The Specification Trap
+The Landing Pilot is the Non-Handling Pilot until the 'decision altitude'
+call, when the Handling Non-Landing Pilot hands the handling to the
+Non-Handling Landing Pilot, unless the latter calls 'go-around,' in which
+case the Handling Non-Landing Pilot continues handling and the
+Non-Handling Landing Pilot continues non-handling until the next call of
+'land' or 'go-around' as appropriate. In view of recent confusions over these
+rules, it was deemed necessary to restate them clearly.
+British Airways memorandum, quoted in Pilot Magazine, December 1996
+Program specification is the process of taking a requirement and reducing
+it down to the point where a programmer's skill can take over. It is an act of
+communication, explaining and clarifying the world in such a way as to
+remove major ambiguities. As well as talking to the developer who will be
+performing the initial implementation, the specification is a record for
+future generations of programmers who will be maintaining and enhancing
+the code. The specification is also an agreement with the user—a
+codification of their needs and an implicit contract that the final system will
+be in line with that requirement.
+Writing a specification is quite a responsibility.
+The problem is that many designers find it difficult to stop. They feel that
+unless every little detail is pinned down in excruciating detail they haven't
+earned their daily dollar.
+This is a mistake for several reasons. First, it's naive to assume that a
+specification will ever capture every detail and nuance of a system or its
+requirement. In restricted problem domains, there are formal methods that
+can describe a system, but they still require the designer to explain the
+meaning of the notation to the end users—there is still a human
+
+interpretation going on to mess things up. Even without the problems
+inherent in this interpretation, it is very unlikely that the average user
+knows going in to a project exactly what they need. They may say they have
+an understanding of the requirement, and they may sign off on the
+200-page document you produce, but you can guarantee that once they see
+the running system you'll be inundated with change requests.
+Second, there is a problem with the expressive power of language itself. All
+the diagramming techniques and formal methods still rely on natural
+language expressions of the operations to be performed.[2] And natural
+language is really not up to the job. Look at the wording of any contract: in
+an attempt to be precise, lawyers have to bend the language in the most
+unnatural ways.
+[2] There are some formal techniques that attempt to express operations algebraically, but these techniques are rarely
+
+used in practice. They still require that the analysts explain the meaning to the end users.
+
+Here's a challenge for you. Write a short description that tells someone how
+to tie bows in their shoelaces. Go on, try it!
+If you are anything like us, you probably gave up somewhere around "now
+roll your thumb and forefinger so that the free end passes under and inside
+the left lace…." It is a phenomenally difficult thing to do. And yet most of us
+can tie our shoes without conscious thought.
+Tip 57
+Some Things Are Better Done than Described
+
+Finally, there is the straightjacket effect. A design that leaves the coder no
+room for interpretation robs the programming effort of any skill and art.
+Some would say this is for the best, but they're wrong. Often, it is only
+during coding that certain options become apparent. While coding, you may
+think "Look at that. Because of the particular way I coded this routine, I
+could add this additional functionality with almost no effort" or "The
+
+specification says to do this, but I could achieve an almost identical result
+by doing it a different way, and I could do it in half the time." Clearly, you
+shouldn't just hack in and make the changes, but you wouldn't even have
+spotted the opportunity if you were constrained by an overly prescriptive
+design.
+As a Pragmatic Programmer, you should tend to view requirements
+gathering, design, and implementation as different facets of the same
+
+process—the delivery of a quality system. Distrust environments where
+requirements are gathered, specifications are written, and then coding
+starts, all in isolation. Instead, try to adopt a seamless approach:
+specification and implementation are simply different aspects of the same
+process—an attempt to capture and codify a requirement. Each should flow
+directly into the next, with no artificial boundaries. You'll find that a
+healthy development process encourages feedback from implementation
+and testing into the specification process.
+Just to be clear, we are not against generating specifications. Indeed, we
+recognize that there are times where incredibly detailed specifications are
+demanded—for contractual reasons, because of the environment where you
+work, or because of the nature of the product you are developing.[3] Just be
+aware that you reach a point of diminishing, or even negative, returns as
+the specifications get more and more detailed. Also be careful about
+building specifications layered on top of specifications, without any
+supporting implementation or prototyping; it's all too easy to specify
+something that can't be built.
+[3] Detailed specifications are clearly appropriate for life-critical systems. We feel they should also be produced for
+
+interfaces and libraries used by others. When your entire output is seen as a set of routine calls, you'd better make sure
+those calls are well specified.
+
+The longer you allow specifications to be security blankets, protecting
+developers from the scary world of writing code, the harder it will be to
+move on to hacking out code. Don't fall into this specification spiral: at some
+point, you need to start coding! If you find your team all wrapped up in
+warm, comfy specifications, break them out. Look at prototyping, or
+consider a tracer bullet development.
+
+Related sections include:
+•
+
+•
+
+Tracer Bullets
+
+Challenges
+•
+
+The shoelace example mentioned in the text is an interesting
+illustration of the problems of written descriptions. Did you consider
+describing the process using diagrams rather than words?
+Photographs? Some formal notation from topology? Models with wire
+laces? How would you teach a toddler?
+
+•
+
+Sometimes a picture is worth more than any number of words.
+Sometimes it is worthless. If you find yourself overspecifying, would
+pictures or special notations help? How detailed do they have to be?
+When is a drawing tool better than a whiteboard?
+
+Circles and Arrows
+[photographs] with circles and arrows and a paragraph on the back of each
+one explaining what each one was, to be used as evidence against us…
+Arlo Guthrie, "Alice's Restaurant"
+From structured programming, through chief programmer teams, CASE
+tools, waterfall development, the spiral model, Jackson, ER diagrams,
+Booch clouds, OMT, Objectory, and Coad/Yourdon, to today's UML,
+computing has never been short of methods intended to make programming
+more like engineering. Each method gathers its disciples, and each enjoys a
+period of popularity. Then each is replaced by the next. Of all of them,
+perhaps only the first—structured programming— has enjoyed a long life.
+Yet some developers, adrift in a sea of sinking projects, keep clinging to the
+latest fad just as shipwreck victims latch onto passing driftwood. As each
+new piece floats by they painfully swim over, hoping it will be better. At the
+end of the day, though, it doesn't matter how good the flotsam is, the
+developers are still aimlessly adrift.
+Don't get us wrong. We like (some) formal techniques and methods. But we
+believe that blindly adopting any technique without putting it into the
+context of your development practices and capabilities is a recipe for
+disappointment.
+Tip 58
+Don't Be a Slave to Formal Methods
+
+Formal methods have some serious shortcomings.
+•
+
+Most formal methods capture requirements using a combination
+of diagrams and some supporting words. These pictures represent
+the designers' understanding of the requirements. However in many
+cases these diagrams are meaningless to the end users, so the
+designers have to interpret them. Therefore, there is no real formal
+checking of the requirements by the actual user of the
+
+•
+
+•
+
+•
+
+system—everything is based on the designers' explanations, just as
+in old-fashioned written requirements. We see some benefit in
+capturing requirements this way, but we prefer, where possible, to
+show the user a prototype and let them play with it.
+•
+Formal methods seem to encourage specialization. One group of
+people works on a data model, another looks at the architecture,
+while requirements gatherers collect use cases (or their equivalent).
+We've seen this lead to poor communication and wasted effort. There
+is also a tendency to fall back into the us versus them mentality of
+designers against coders. We prefer to understand the whole of the
+system we're working on. It may not be possible to have an in-depth
+grasp of every aspect of a system, but you should know how the
+components interact, where the data lives, and what the
+requirements are.
+•
+We like to write adaptable, dynamic systems, using metadata to
+allow us to change the character of applications at runtime. Most
+current formal methods combine a static object or data model with
+some kind of event- or activity-charting mechanism. We haven't yet
+come across one that allows us to illustrate the kind of dynamism we
+feel systems should exhibit. In fact, most formal methods will lead
+you astray, encouraging you to set up static relationships between
+objects that really should be knitted together dynamically.
+
+Do Methods Pay Off?
+In a 1999 CACM article [Gla99b], Robert Glass reviews the research into
+the productivity and quality improvements gained using seven different
+software development technologies (4GLs, structured techniques, CASE
+tools, formal methods, clean room methodology, process models, and object
+orientation). He reports that the initial hype surrounding all of these
+methods was overblown. Although there is an indication that some methods
+have benefits, these benefits start to manifest themselves only after a
+significant productivity and quality drop while the technique is adopted
+and its users train themselves. Never underestimate the cost of adopting
+new tools and methods. Be prepared to treat the first projects using these
+techniques as a learning experience.
+
+Should We Use Formal Methods?
+Absolutely. But always remember that formal development methods are
+just one more tool in the toolbox. If, after careful analysis, you feel you need
+to use a formal method, then embrace it—but remember who is in charge.
+Never become a slave to a methodology: circles and arrows make poor
+
+masters. Pragmatic Programmers look at methodologies critically, then
+extract the best from each and meld them into a set of working practices
+that gets better each month. This is crucial. You should work constantly to
+refine and improve your processes. Never accept the rigid confines of a
+methodology as the limits of your world.
+Don't give in to the false authority of a method. People may walk into
+meetings with an acre of class diagrams and 150 use cases, but all that
+paper is still just their fallible interpretation of requirements and design.
+Try not to think about how much a tool cost when you look at its output.
+Tip 59
+Expensive Too Do Not Produce Better Designs
+
+Formal methods certainly have their place in development. However, if you
+come across a project where the philosophy is "the class diagram is the
+application, the rest is mechanical coding," you know you're looking at a
+waterlogged project team and a long paddle home.
+
+Related sections include:
+•
+
+•
+
+The Requirements Pit
+
+Challenges
+•
+
+•
+
+•
+
+•
+
+Use case diagrams are part of the UML process for gathering
+requirements (see The Requirements Pit). Are they an effective way
+of communicating with your users? If not, why are you using them?
+•
+How can you tell if a formal method is bringing your team
+benefits? What can you measure? What constitutes an improvement?
+Can you distinguish between benefits of the tool and increased
+experience on the part of team members?
+•
+Where is the break-even point for introducing new methods to
+your team? How do you evaluate the trade-off between future
+benefits and current losses of productivity as the tool is introduced?
+•
+Are tools that work for large projects good for small ones? How
+about the other way around?
+•
+
+Chapter 8. Pragmatic Projects
+As your project gets under way, we need to move away from issues of
+individual philosophy and coding to talk about larger, project-sized issues.
+We aren't going to go into specifics of project management, but we will talk
+about a handful of critical areas that can make or break any project.
+As soon as you have more than one person working on a project, you need to
+establish some ground rules and delegate parts of the project accordingly.
+In Pragmatic Teams, we'll show how to do this while honoring the
+pragmatic philosophy.
+The single most important factor in making project-level activities work
+consistently and reliably is to automate your procedures. We'll explain why,
+and show some real-life examples in Ubiquitous Automation.
+Earlier, we talked about testing as you code. In Ruthless Testing, we go to
+the next step of project-wide testing philosophy and tools—especially if you
+don't have a large QA staff at your beck and call.
+The only thing that developers dislike more than testing is documentation.
+Whether you have technical writers helping you or are doing it on your own,
+we'll show you how to make the chore less painful and more productive in
+
+It's All Writing.
+Success is in the eye of the beholder—the sponsor of the project. The
+perception of success is what counts, and in Great Expectations we'll show
+you some tricks to delight every project's sponsor.
+The last tip in the book is a direct consequence of all the rest. In Pride and
+Prejudice, we encourage you to sign your work, and to take pride in what
+you do.
+
+Pragmatic Teams
+At Group L, Stoffel oversees six first-rate programmers, a managerial
+challenge roughly comparable to herding cats.
+The Washington Post Magazine, June 9, 1985
+So far in this book we've looked at pragmatic techniques that help an
+individual be a better programmer. Can these methods work for teams as
+well?
+
+The answer is a resounding "yes!" There are advantages to being a
+pragmatic individual, but these advantages are multiplied manyfold if the
+individual is working on a pragmatic team.
+In this section we'll look briefly at how pragmatic techniques can be applied
+to teams as a whole. These notes are only a start. Once you've got a group of
+pragmatic developers working in an enabling environment, they'll quickly
+develop and refine their own team dynamics that work for them.
+Let's recast some of the previous sections in terms of teams.
+
+No Broken Windows
+Quality is a team issue. The most diligent developer placed on a team that
+just doesn't care will find it difficult to maintain the enthusiasm needed to
+fix niggling problems. The problem is further exacerbated if the team
+actively discourages the developer from spending time on these fixes.
+Teams as a whole should not tolerate broken windows—those small
+imperfections that no one fixes. The team must take responsibility for the
+quality of the product, supporting developers who understand the no
+broken windows philosophy we describe in Software Entropy, and
+encouraging those who haven't yet discovered it.
+Some team methodologies have a quality officer—someone to whom the
+team delegates the responsibility for the quality of the deliverable. This is
+clearly ridiculous: quality can come only from the individual contributions
+of all team members.
+
+Boiled Frogs
+Remember the poor frog in the pan of water, back in Stone Soup and Boiled
+Frogs? It doesn't notice the gradual change in its environment, and ends up
+cooked. The same can happen to individuals who aren't vigilant. It can be
+difficult to keep an eye on your overall environment in the heat of project
+development.
+It's even easier for teams as a whole to get boiled. People assume that
+someone else is handling an issue, or that the team leader must have OK'd
+a change that your user is requesting. Even the best-intentioned teams can
+be oblivious to significant changes in their projects.
+
+Fight this. Make sure everyone actively monitors the environment for
+changes. Maybe appoint a chief water tester. Have this person check
+constantly for increased scope, decreased time scales, additional features,
+new environments—anything that wasn't in the original agreement. Keep
+metrics on new requirements (see page 209). The team needn't reject
+changes out of hand—you simply need to be aware that they're happening.
+Otherwise, it'll be you in the hot water.
+
+Communicate
+It's obvious that developers in a team must talk to each other. We gave
+some suggestions to facilitate this in Communicate!. However, it's easy to
+forget that the team itself has a presence within the organization. The team
+as an entity needs to communicate clearly with the rest of the world.
+To outsiders, the worst project teams are those that appear sullen and
+reticent. They hold meetings with no structure, where no one wants to talk.
+Their documents are a mess: no two look the same, and each uses different
+terminology.
+Great project teams have a distinct personality. People look forward to
+meetings with them, because they know that they'll see a well-prepared
+performance that makes everyone feel good. The documentation they
+produce is crisp, accurate, and consistent. The team speaks with one voice.[1]
+They may even have a sense of humor.
+[1] The team speaks with one voice-externally. Internally, we strongly encourage lively, robust debate. Good developers
+
+tend to be passionate about their work.
+
+There is a simple marketing trick that helps teams communicate as one:
+generate a brand. When you start a project, come up with a name for it,
+ideally something off-the-wall. (In the past, we've named projects after
+things such as killer parrots that prey on sheep, optical illusions, and
+mythical cities.) Spend 30 minutes coming up with a zany logo, and use it
+on your memos and reports. Use your team's name liberally when talking
+with people. It sounds silly, but it gives your team an identity to build on,
+and the world something memorable to associate with your work.
+
+Don't Repeat Yourself
+In The Evils of Duplication, we talked about the difficulties of eliminating
+duplicated work between members of a team. This duplication leads to
+
+wasted effort, and can result in a maintenance nightmare. Clearly good
+communication can help here, but sometimes something extra is needed.
+Some teams appoint a member as the project librarian, responsible for
+coordinating documentation and code repositories. Other team members
+can use this person as the first port of call when they're looking for
+something. A good librarian will also be able to spot impending duplication
+by reading the material that they're handling.
+When the project's too big for one librarian (or when no one wants to play
+the role), appoint people as focal points for various functional aspects of the
+work. If people want to talk over date handling, they should know to talk
+with Mary. If there's a database schema issue, see Fred.
+And don't forget the value of groupware systems and local Usenet
+news-groups for communicating and archiving questions and answers.
+
+Orthogonality
+Traditional team organization is based on the old-fashioned waterfall
+method of software construction. Individuals are assigned roles based on
+their job function. You'll find business analysts, architects, designers,
+programmers, testers, documenters, and the like.[2] There is an implicit
+hierarchy here—the closer to the user you're allowed, the more senior you
+are.
+[2] In The Rational Unified Process: An Introduction, the author identifies 27 separate roles within a project team!
+
+[Kru98]
+
+Taking things to the extreme, some development cultures dictate strict
+divisions of responsibility; coders aren't allowed to talk to testers, who in
+turn aren't allowed to talk to the chief architect, and so on. Some
+organizations then compound the problem by having different sub-teams
+report through separate management chains.
+It is a mistake to think that the activities of a project—analysis, design,
+coding, and testing—can happen in isolation. They can't. These are
+different views of the same problem, and artificially separating them can
+cause a boatload of trouble. Programmers who are two or three levels
+removed from the actual users of their code are unlikely to be aware of the
+context in which their work is used. They will not be able to make informed
+decisions.
+Tip 60
+
+Organize Around Functionality, Not Job Functions
+
+We favor splitting teams functionally. Divide your people into small teams,
+each responsible for a particular functional aspect of the final system. Let
+the teams organize themselves internally, building on individual strengths
+as they can. Each team has responsibilities to others in the project, as
+defined by their agreed-upon commitments. The exact set of commitments
+changes with each project, as does the allocation of people into teams.
+Functionality here does not necessarily mean end-user use cases. The
+database access layer counts, as does the help subsystem. We're looking for
+cohesive, largely self-contained teams of people—exactly the same criteria
+we should be using when we modularize code. There are warning signs that
+the team organization is wrong—a classic example is having two subteams
+working on the same program module or class.
+How does this functional style of organization help? Organize our resources
+using the same techniques we use to organize code, using techniques such
+as contracts (Design by Contract), decoupling (Decoupling and the Law of
+Demeter), and orthogonality (Orthogonality), and we help isolate the team
+as a whole from the effects of change. If the user suddenly decides to change
+database vendors, only the database team should be affected. Should
+marketing suddenly decide to use an off-the-shelf tool for the calendar
+function, the calendar group takes a hit. Properly executed, this kind of
+group approach can dramatically reduce the number of interactions
+between individuals' work, reducing time scales, increasing quality, and
+cutting down on the number of defects. This approach can also lead to a
+more committed set of developers. Each team knows that they alone are
+responsible for a particular function, so they feel more ownership of their
+output.
+However, this approach works only with responsible developers and strong
+project management. Creating a pool of autonomous teams and letting
+them loose without leadership is a recipe for disaster. The project needs at
+least two "heads"—one technical, the other administrative. The technical
+head sets the development philosophy and style, assigns responsibilities to
+teams, and arbitrates the inevitable "discussions" between people. The
+technical head also looks constantly at the big picture, trying to find any
+unnecessary commonality between teams that could reduce the
+orthogonality of the overall effort. The administrative head, or project
+manager, schedules the resources that the teams need, monitors and
+reports on progress, and helps decide priorities in terms of business needs.
+
+The administrative head might also act as the team's ambassador when
+communicating with the outside world.
+Teams on larger projects need additional resources: a librarian who indexes
+and stores code and documentation, a tool builder who provides common
+tools and environments, operational support, and so on.
+This type of team organization is similar in spirit to the old chief
+programmer team concept, first documented in 1972 [Bak72].
+
+Automation
+A great way to ensure both consistency and accuracy is to automate
+everything the team does. Why lay code out manually when your editor can
+do it automatically as you type? Why complete test forms when the
+overnight build can run tests automatically?
+Automation is an essential component of every project team—important
+enough for us to dedicate an entire section to it, starting on the following
+page. To ensure that things get automated, appoint one or more team
+members as tool builders to construct and deploy the tools that automate
+the project drudgery. Have them produce makefiles, shell scripts, editor
+templates, utility programs, and the like.
+
+Know When to Stop Adding Paint
+Remember that teams are made up of individuals. Give each member the
+ability to shine in his or her own way. Give them just enough structure to
+support them and to ensure that the project delivers against its
+requirements. Then, like the painter in Good-Enough Software, resist the
+temptation to add more paint.
+
+Related sections include:
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+Software Entropy
+Stone Soup and Boiled Frogs
+Good-Enough Software
+Communicate!
+The Evils of Duplication
+Orthogonality
+Design by Contract
+Decoupling and the Law of Demeter
+
+•
+
+•
+
+Ubiquitous Automation
+
+Challenges
+•
+
+•
+
+•
+
+Look around for successful teams outside the area of software
+development. What makes them successful? Do they use any of the
+processes discussed in this section?
+•
+Next time you start a project, try convincing people to brand it.
+Give your organization time to become used to the idea, and then do
+a quick audit to see what difference it made, both within the team
+and externally.
+•
+Team Algebra: In school, we are given problems such as "If it
+takes 4 workers 6 hours to dig a ditch, how long would it take 8
+workers?" In real life, however, what factors affect the answer to: "If
+it takes 4 programmers 6 months to develop an application, how long
+would it take 8 programmers?" In how many scenarios is the time
+actually reduced?
+•
+
+Ubiquitous Automation
+Civilization advances by extending the number of important operations we
+can perform without thinking.
+Alfred North Whitehead
+At the dawn of the age of automobiles, the instructions for starting a
+Model-T Ford were more than two pages long. With modern cars, you just
+turn the key—the starting procedure is automatic and foolproof. A person
+following a list of instructions might flood the engine, but the automatic
+starter won't.
+Although computing is still an industry at the Model-T stage, we can't
+afford to go through two pages of instructions again and again for some
+common operation. Whether it is the build and release procedure, code
+review paperwork, or any other recurring task on the project, it has to be
+automatic. We may have to build the starter and fuel injector from scratch,
+but once it's done, we can just turn the key from then on.
+In addition, we want to ensure consistency and repeatability on the project.
+Manual procedures leave consistency up to chance; repeatability isn't
+guaranteed, especially if aspects of the procedure are open to interpretation
+by different people.
+
+All on Automatic
+We were once at a client site where all the developers were using the same
+IDE. Their system administrator gave each developer a set of instructions
+on installing add-on packages to the IDE. These instructions filled many
+pages—pages full of click here, scroll there, drag this, double-click that, and
+do it again.
+Not surprisingly, every developer's machine was loaded slightly differently.
+Subtle differences in the application's behavior occurred when different
+developers ran the same code. Bugs would appear on one machine but not
+on others. Tracking down version differences of any one component usually
+revealed a surprise.
+Tip 61
+Don't Use Manual Procedures
+
+People just aren't as repeatable as computers are. Nor should we expect
+them to be. A shell script or batch file will execute the same instructions, in
+the same order, time after time. It can be put under source control, so you
+can examine changes to the procedure over time as well ("but it used to
+work…").
+Another favorite tool of automation is cron (or "at" on Windows NT). It
+allows us to schedule unattended tasks to run periodically—usually in the
+middle of the night. For example, the following crontab file specifies that a
+project's nightly command be run at five minutes past midnight every day,
+that the backup be run at 3:15 a.m. on weekdays, and that expense_reports
+be run at midnight on the first of the month.
+
+# MIN HOUR DAY MONTH DAYOFWEEK
+
+COMMAND
+
+# --------------------------------------------------------------5
+
+0
+
+*
+
+*
+
+*
+
+15
+
+3
+
+*
+
+*
+
+1-5
+
+0
+
+0
+
+1
+
+*
+
+*
+
+/projects/Manhattan/bin/nightly
+/usr/local/bin/backup
+/home/accounting/expense_reports
+
+Using cron, we can schedule backups, the nightly build, Web site
+maintenance, and anything else that needs to be done—unattended,
+automatically.
+
+Compiling the Project
+Compiling the project is a chore that should be reliable and repeat-able. We
+generally compile projects with makefiles, even when using an IDE
+environment. There are several advantages in using makefiles. It is a
+scripted, automatic procedure. We can add in hooks to generate code for us,
+and run regression tests automatically. IDEs have their advantages, but
+with IDEs alone it can be hard to achieve the level of automation that we're
+looking for. We want to check out, build, test, and ship with a single
+command.
+
+Generating Code
+In The Evils of Duplication, we advocated generating code to derive
+knowledge from common sources. We can exploit make's dependency
+analysis mechanism to make this process easy. It's a pretty simple matter
+to add rules to a makefile to generate a file from some other source
+automatically. For example, suppose we wanted to take an XML file,
+generate a Java file from it, and compile the result.
+
+.SUFFIXES: .Java .class .xml
+.xml.java:
+perl convert.pl $<
+
+> $@
+
+.Java.class:
+$(JAVAC) $(JAVAC_FLAGS) $<
+
+Type make test.class, and make will automatically look for a file named
+test.xml, build a .java file by running a Perl script, and then compile that
+file to produce test.class.
+We can use the same sort of rules to generate source code, header files, or
+documentation automatically from some other form as well (see Code
+Generators).
+
+Regression Tests
+You can also use the makefile to run regression tests for you, either for an
+individual module or for an entire subsystem. You can easily test the entire
+project with just one command at the top of the source tree, or you can test
+an individual module by using the same command in a single directory. See
+Ruthless Testing, for more on regression testing.
+
+Recursive make
+Many projects set up recursive, hierarchical for project builds and
+testing. But be aware of some potential problems.
+make calculates dependencies between the various targets it has to
+
+build. But it can analyze only the dependencies that exist within
+one single make invocation. In particular, a recursive make has no
+knowledge of dependencies that other invocations of make may have.
+If you are careful and precise, you can get the proper results, but it's
+easy to cause extra work unnecessarily—or miss a dependency and
+not recompile when it's needed.
+In addition, build dependencies may not be the same as test
+dependencies, and you may need separate hierarchies.
+
+Build Automation
+A build is a procedure that takes an empty directory (and a known
+compilation environment) and builds the project from scratch, producing
+whatever you hope to produce as a final deliverable—a CD-ROM master
+image or a self-extracting archive, for instance. Typically a project build
+will encompass the following steps.
+1. 1.
+
+Check out the source code from the repository.
+
+2. 2. Build the project from scratch, typically from a top-level
+makefile. Each build is marked with some form of release or version
+number, or perhaps a date stamp.
+3. 3. Create a distributable image. This procedure may entail fixing
+file ownership and permissions, and producing all examples,
+documentation, README files, and anything else that will ship with
+the product, in the exact format that will be required when you
+ship.[3]
+[3] If you are producing a CD-ROM in ISO9660 format, for example, you would run the program that produces a
+
+bit-for-bit image of the 9660 file system. Why wait until the night before you ship to make sure it works?
+
+4. 4.
+
+Run specified tests (make test).
+
+For most projects, this level of build is run automatically every night. In
+this nightly build, you will typically run more complete tests than an
+
+individual might run while building some specific portion of the project.
+The important point is to have the full build run all available tests. You
+want to know if a regression test failed because of one of today's code
+changes. By identifying the problem close to the source, you stand a better
+chance of finding and fixing it.
+When you don't run tests regularly, you may discover that the application
+broke due to a code change made three months ago. Good luck finding that
+one.
+
+Final Builds
+Final builds, which you intend to ship as products, may have different
+requirements from the regular nightly build. A final build may require that
+the repository be locked, or tagged with the release number, that
+optimization and debug flags be set differently, and so on. We like to use a
+separate make target (such as make final) that sets all of these parameters
+at once.
+Remember that if the product is compiled differently from earlier versions,
+then you must test against this version all over again.
+
+Automatic Administrivia
+Wouldn't it be nice if programmers could actually devote all of their time to
+programming? Unfortunately, this is rarely the case. There is e-mail to be
+answered, paperwork to be filled out, documents to be posted to the Web,
+and so on. You may decide to create a shell script to do some of the dirty
+work, but you still have to remember to run the script when needed.
+Because memory is the second thing you lose as you age,[4] we don't want to
+rely on it too heavily. We can run scripts to perform procedures for us
+automatically, based on the content of source code and documents. Our goal
+is to maintain an automatic, unattended, content-driven workflow.
+[4] What's the first? I forget.
+
+Web Site Generation
+Many development teams use an internal Web site for project
+communication, and we think this is a great idea. But we don't want to
+spend too much time maintaining the Web site, and we don't want to let it
+
+get stale or out of date. Misleading information is worse than no
+information at all.
+Documentation that is extracted from code, requirements analyses, design
+documents, and any drawings, charts, or graphs all need to be published to
+the Web on a regular basis. We like to publish these documents
+automatically as part of the nightly build or as a hook into the source code
+check-in procedure.
+However it is done, Web content should be generated automatically from
+information in the repository and published without human intervention.
+This is really another application of the DRY principle: information exists
+in one form as checked-in code and documents. The view from the Web
+browser is simply that—just a view. You shouldn't have to maintain that
+view by hand.
+Any information generated by the nightly build should be accessible on the
+development Web site: results of the build itself (for example, the build
+results might be presented as a one-page summary that includes compiler
+warnings, errors, and current status), regression tests, performance
+statistics, coding metrics and any other static analysis, and so on.
+
+Approval Procedures
+Some projects have various administrative workflows that must be followed.
+For instance, code or design reviews need to be scheduled and followed
+through, approvals may need to be granted, and so on. We can use
+automation—and especially the Web site—to help ease the paperwork
+burden.
+Suppose you wanted to automate code review scheduling and approval. You
+might put a special marker in each source code file:
+
+/* Status: needs_review */
+
+A simple script could go through all of the source code and look for all files
+that had a status of needs_review, indicating that they were ready to be
+reviewed. You could then post a list of those files as a Web page,
+automatically send e-mail to the appropriate people, or even schedule a
+meeting automatically using some calendar software.
+You can set up a form on a Web page for the reviewers to register approval
+or disapproval. After the review, the status can be automatically changed to
+
+reviewed. Whether you have a code walk-through with all the participants
+
+is up to you; you can still do the paperwork automatically. (In an article in
+the April 1999 CACM, Robert Glass summarizes research that seems to
+indicate that, while code inspection is effective, conducting reviews in
+meetings is not [Gla99a].)
+
+The Cobbler's Children
+The cobbler's children have no shoes. Often, people who develop software
+use the poorest tools to do the job.
+But we have all the raw materials we need to craft better tools. We have
+cron. We have make, on both Windows and Unix platforms. And we have
+Perl and other high-level scripting languages for quickly developing custom
+tools, Web page generators, code generators, test harnesses, and so on.
+Let the computer do the repetitious, the mundane—it will do a better job of
+it than we would. We've got more important and more difficult things to do.
+
+Related sections include:
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+The Cat Ate My Source Code
+The Evils of Duplication
+The Power of Plain Text
+Shell Games
+Debugging
+Code Generators
+Pragmatic Teams
+Ruthless Testing
+It's All Writing
+
+Challenges
+•
+
+Look at your habits throughout the workday. Do you see any
+repetitive tasks? Do you type the same sequence of commands over
+and over again?
+
+•
+
+Try writing a few shell scripts to automate the process. Do you
+always click on the same sequence of icons repeatedly? Can you
+create a macro to do all that for you?
+
+•
+
+How much of your project paperwork can be automated? Given
+the high expense of programming staff,[5] determine how much of the
+project's budget is being wasted on administrative procedures. Can
+you justify the amount of time it would take to craft an automated
+solution based on the overall cost savings it would achieve?
+
+•
+
+[5] For estimating purposes, you can figure an industry average of about US$100,000 per head—that's salary
+
+plus benefits, training, office space and overhead, and so on.
+
+Ruthless Testing
+Most developers hate testing. They tend to test gently, subconsciously
+knowing where the code will break and avoiding the weak spots. Pragmatic
+Programmers are different. We are driven to find our bugs now, so we don't
+have to endure the shame of others finding our bugs later.
+Finding bugs is somewhat like fishing with a net. We use fine, small nets
+(unit tests) to catch the minnows, and big, coarse nets (integration tests) to
+catch the killer sharks. Sometimes the fish manage to escape, so we patch
+any holes that we find, in hopes of catching more and more slippery defects
+that are swimming about in our project pool.
+Tip 62
+Test Early. Test Often. Test Automatically.
+
+We want to start testing as soon as we have code. Those tiny minnows have
+a nasty habit of becoming giant, man-eating sharks pretty fast, and
+catching a shark is quite a bit harder. But we don't want to have to do all
+that testing by hand.
+Many teams develop elaborate test plans for their projects. Sometimes they
+will even use them. But we've found that teams that use automated tests
+have a much better chance of success. Tests that run with every build are
+much more effective than test plans that sit on a shelf.
+The earlier a bug is found, the cheaper it is to remedy. "Code a little, test a
+little" is a popular saying in the Smalltalk world,[6] and we can adopt that
+mantra as our own by writing test code at the same time (or even before) we
+write the production code.
+[6] eXtreme Programming [URL 45] calls this concept "continuous Integration, relentless testing."
+
+In fact, a good project may well have more test code than production code.
+The time it takes to produce this test code is worth the effort. It ends up
+being much cheaper in the long run, and you actually stand a chance of
+producing a product with close to zero defects.
+Additionally, knowing that you've passed the test gives you a high degree of
+confidence that a piece of code is "done."
+Tip 63
+Coding Ain't Done 'Til All the Tests Run
+
+Just because you have finished hacking out a piece of code doesn't mean you
+can go tell your boss or your client that it's done. It's not. First of all, code is
+never really done. More importantly, you can't claim that it is usable by
+anyone until it passes all of the available tests.
+We need to look at three main aspects of project-wide testing: what to test,
+how to test, and when to test.
+
+What to Test
+There are several major types of software testing that you need to perform:
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+Unit testing
+Integration testing
+Validation and verification
+Resource exhaustion, errors, and recovery
+Performance testing
+Usability testing
+
+This list is by no means complete, and some specialized projects will require
+various other types of testing as well. But it gives us a good starting point.
+
+Unit Testing
+A unit test is code that exercises a module. We covered this topic by itself in
+Code That's Easy to Test. Unit testing is the foundation of all the other
+forms of testing that we'll discuss in this section. If the parts don't work by
+themselves, they probably won't work well together. All of the modules you
+are using must pass their own unit tests before you can proceed.
+
+Once all of the pertinent modules have passed their individual tests, you're
+ready for the next stage. You need to test how all the modules use and
+interact with each other throughout the system.
+
+Integration Testing
+Integration testing shows that the major subsystems that make up the
+project work and play well with each other. With good contracts in place
+and well tested, any integration issues can be detected easily. Otherwise,
+integration becomes a fertile breeding ground for bugs. In fact, it is often
+the single largest source of bugs in the system.
+Integration testing is really just an extension of the unit testing we've
+described—only now you're testing how entire subsystems honor their
+contracts.
+
+Validation and Verification
+As soon as you have an executable user interface or prototype, you need to
+answer an all-important question: the users told you what they wanted, but
+is it what they need?
+Does it meet the functional requirements of the system? This, too, needs to
+be tested. A bug-free system that answers the wrong question isn't very
+useful. Be conscious of end-user access patterns and how they differ from
+developer test data (for an example, see the story about brush strokes on
+page 92).
+
+Resource Exhaustion, Errors, and Recovery
+Now that you have a pretty good idea that the system will behave correctly
+under ideal conditions, you need to discover how it will behave under
+real-world conditions. In the real world, your programs don't have limitless
+resources; they run out of things. A few limits your code may encounter
+include:
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+Memory
+Disk space
+CPU bandwidth
+Wall-clock time
+Disk bandwidth
+Network bandwidth
+
+•
+
+•
+
+•
+
+•
+
+Color palette
+Video resolution
+
+You might actually check for disk space or memory allocation failures, but
+how often do you test for the others? Will your application fit on a 640 × 480
+screen with 256 colors? Will it run on a 1600 × 1280 screen with 24-bit color
+without looking like a postage stamp? Will the batch job finish before the
+archive starts?
+You can detect environmental limitations, such as the video specifications,
+and adapt as appropriate. Not all failures are recoverable, however. If your
+code detects that memory has been exhausted, your options are limited: you
+may not have enough resources left to do anything except fail.
+When the system does fail,[7] will it fail gracefully? Will it try, as best it can,
+to save its state and prevent loss of work? Or will it "GPF" or "core-dump" in
+the user's face?
+[7] Our copy editor wanted us to change this sentence to "If the system does fail…." We resisted.
+
+Performance Testing
+Performance testing, stress testing, or testing under load may be an
+important aspect of the project as well.
+Ask yourself if the software meets the performance requirements under
+real-world conditions—with the expected number of users, or connections,
+or transactions per second. Is it scalable?
+For some applications, you may need specialized testing hardware or
+software to simulate the load realistically.
+
+Usability Testing
+Usability testing is different from the types of testing discussed so far. It is
+performed with real users, under real environmental conditions.
+
+Look at usability in terms of human factors. Were there any miIt's All
+Writing
+The palest ink is better than the best memory.
+Chinese Proverb
+
+Typically, developers don't give much thought to documentation. At best it
+is an unfortunate necessity; at worst it is treated as a low-priority task in
+the hope that management will forget about it at the end of the project.
+Pragmatic Programmers embrace documentation as an integral part of the
+overall development process. Writing documentation can be made easier by
+not duplicating effort or wasting time, and by keeping documentation close
+at hand—in the code itself, if possible.
+These aren't exactly original or novel thoughts; the idea of wedding code
+and documentation appears in Donald Knuth's work on literate
+programming and in Sun's JavaDoc utility, among others. We want to
+downplay the dichotomy between code and documentation, and instead
+treat them as two views of the same model (see It's Just a View). In fact, we
+want to go a little further and apply all of our pragmatic principles to
+documentation as well as to code.
+Tip 67
+Treat English as Just Another Programming Language
+
+There are basically two kinds of documentation produced for a project:
+internal and external. Internal documentation includes source code
+comments, design and test documents, and so on. External documentation
+is anything shipped or published to the outside world, such as user manuals.
+But regardless of the intended audience, or the role of the writer (developer
+or technical writer), all documentation is a mirror of the code. If there's a
+discrepancy, the code is what matters—for better or worse.
+Tip 68
+Build Documentation In, Don't Bolt It On
+
+We'll start with internal documentation.
+
+Comments in Code
+Producing formatted documents from the comments and declarations in
+source code is fairly straightforward, but first we have to ensure that we
+actually have comments in the code. Code should have comments, but too
+many comments can be just as bad as too few.
+
+In general, comments should discuss why something is done, its purpose
+and its goal. The code already shows how it is done, so commenting on this
+is redundant—and is a violation of the DRY principle.
+Commenting source code gives you the perfect opportunity to document
+those elusive bits of a project that can't be documented anywhere else:
+engineering trade-offs, why decisions were made, what other alternatives
+were discarded, and so on.
+We like to see a simple module-level header comment, comments for
+significant data and type declarations, and a brief per-class and per-method
+header, describing how the function is used and anything that it does that
+is not obvious.
+Variable names, of course, should be well chosen and meaningful. foo, for
+instance, is meaningless, as is doit or manager or stuff. Hungarian
+notation (where you encode the variable's type information in the name
+itself) is utterly inappropriate in object-oriented systems. Remember that
+you (and others after you) will be reading the code many hundreds of times,
+but only writing it a few times. Take the time to spell out connectionPool
+instead of cp.
+Even worse than meaningless names are misleading names. Have you ever
+had someone explain inconsistencies in legacy code such as, "The routine
+called getData really writes data to disk"? The human brain will repeatedly
+foul this up—it's called the Stroop Effect [Str35]. You can try the following
+experiment yourself to see the effects of such interference. Get some colored
+pens, and use them to write down the names of colors. However, never
+write a color name using that color pen. You could write the word "blue" in
+green, the word "brown" in red, and so on. (Alternatively, we have a sample
+set of colors already drawn on our Web site at
+http://www.pragmaticprogrammer.com.) Once you have the color names
+drawn, try to say aloud the color with which each word is drawn, as fast as
+you can. At some point you'll trip up and start reading the names of the
+colors, and not the colors themselves. Names are deeply meaningful to your
+brain, and misleading names add chaos to your code.
+You can document parameters, but ask yourself if it is really necessary in
+all cases. The level of comment suggested by the JavaDoc tool seems
+appropriate:
+
+/**
+* Find the peak (highest) value within a specified date
+* range of samples.
+
+*
+* @param
+
+aRange Range of dates to search for data.
+
+* @param
+
+aThreshold Minimum value to consider.
+
+* @return the value, or <code>null</code> if no value found
+greater than or equal to the threshold.
+*/
+public Sample findPeak(DateRange aRange, double aThreshold);
+
+Here's a list of things that should not appear in source comments.
+•
+
+•
+
+A list of the functions exported by code in the file. There are
+programs that analyze source for you. Use them, and the list is
+guaranteed to be up to date.
+•
+Revision history. This is what source code control systems are
+for (see Source Code Control). However, it can be useful to include
+information on the date of last change and the person who made it.[9]
+•
+
+[9] This kind of information, as well as the filename, is provided by the RCS
+
+•
+•
+
+$Id$ tag.
+
+A list of other files this file uses. This can be determined more
+accurately using automatic tools.
+•
+The name of the file. If it must appear in the file, don't
+maintain it by hand. RCS and similar systems can keep this
+information up to date automatically. If you move or rename the file,
+you don't want to have to remember to edit the header.
+•
+
+One of the most important pieces of information that should appear in the
+source file is the author's name—not necessarily who edited the file last,
+but the owner. Attaching responsibility and accountability to source code
+does wonders in keeping people honest (see Pride and Prejudice).
+The project may also require certain copyright notices or other legal
+boilerplate to appear in each source file. Get your editor to insert these for
+you automatically.
+With meaningful comments in place, tools such as JavaDoc [URL 7] and
+DOC++ [URL 21] can extract and format them to automatically produce
+API-level documentation. This is one specific example of a more general
+technique we use—executable documents.
+
+Executable Documents
+Suppose we have a specification that lists the columns in a database table.
+We'll then have a separate set of SQL commands to create the actual table
+
+in the database, and probably some kind of programming language record
+structure to hold the contents of a row in the table. The same information is
+repeated three times. Change any one of these three sources, and the other
+two are immediately out of date. This is a clear violation of the DRY
+principle.
+To correct this problem, we need to choose the authoritative source of
+information. This may be the specification, it may be a database schema
+tool, or it may be some third source altogether. Let's choose the
+specification document as the source. It's now our model for this process.
+We then need to find a way to export the information it contains as different
+views—a database schema and a high-level language record, for example.[10]
+[10] See It's Just a View, for more on models and views.
+
+If your document is stored as plain text with markup commands (using
+HTML, LaTeX, or troff, for example), then you can use tools such as Perl to
+extract the schema and reformat it automatically. If your document is in a
+word processor's binary format, then see the box on the following page for
+some options.
+Your document is now an integral part of the project development. The only
+way to change the schema is to change the document. You are guaranteeing
+that the specification, schema, and code all agree. You minimize the
+amount of work you have to do for each change, and you can update the
+views of the change automatically.
+
+What if My Document Isn't Plain Text?
+Unfortunately, more and more project documents are now being
+written using world processors that store the file on disk in some
+proprietary format. We say "unfortunately" because this severely
+restricts your options to process the document automatically.
+However, you still have a couple of options:
+•
+
+•
+
+Write macros. Most sophisticated word processors now
+have a macro language. With some effort you can program
+them to export tagged sections of your documents into the
+alternative forms you need. If programming at this level is
+too painful, you could always export the appropriate section
+into a standard format plain text file, and then use a tool
+such as Perl to convert this into the final forms.
+•
+Make the document subordinate. Rather than have the
+document as the definitive source, use another
+•
+
+representation. (In the database example, you might want to
+use the schema as the authoritative information.) Then write
+a tool that exports this information into a form that the
+document can import. Be careful, however. You need to
+ensure that this information is imported every time the
+document is printed, rather than just once when the
+document is created.
+
+We can generate API-level documentation from source code using tools
+such as JavaDoc and DOC++ in a similar fashion. The model is the source
+code: one view of the model can be compiled; other views are meant to be
+printed out or viewed on the Web. Our goal is always to work on the
+model—whether the model is the code itself or some other document—and
+have all views updated automatically (see Ubiquitous Automation, for more
+on automatic processes).
+Suddenly, documentation isn't so bad.
+
+Technical Writers
+Up until now, we've talked only about internal documentation—written by
+the programmers themselves. But what happens when you have
+professional technical writers involved in the project? All too often,
+programmers just throw material "over the wall" to technical writers and
+let them fend for themselves to produce user manuals, promotional pieces,
+and so on.
+This is a mistake. Just because programmers aren't writing these
+documents doesn't mean that we can forsake pragmatic principles. We
+want the writers to embrace the same basic principles that a Pragmatic
+Programmer does—especially honoring the DRY principle, orthogonality,
+the model-view concept, and the use of automation and scripting.
+
+Print It or Weave It
+One problem inherent with published, paper documentation is that it can
+become out of date as soon as it's printed. Documentation of any form is just
+a snapshot.
+So we try to produce all documentation in a form that can be published
+online, on the Web, complete with hyperlinks. It's easier to keep this view of
+the documentation up to date than to track down every existing paper copy,
+
+burn it, and reprint and redistribute new copies. It's also a better way to
+address the needs of a wide audience. Remember, though, to put a date
+stamp or version number on each Web page. This way the reader can get a
+good idea of what's up to date, what's changed recently, and what hasn't.
+Many times you need to present the same documentation in different
+formats: a printed document, Web pages, online help, or perhaps a slide
+show. The typical solution relies heavily on cut-and-paste, creating a
+number of new independent documents from the original. This is a bad idea:
+a document's presentation should be independent of its content.
+If you are using a markup system, you have the flexibility to implement as
+many different output formats as you need. You can choose to have
+
+<H1>Chapter Title</H1>
+
+generate a new chapter in the report version of the document and title a
+new slide in the slide show. Technologies such as XSL and CSS[11] can be
+used to generate multiple output formats from this one markup.
+[11] eXtensible Style Language and Cascading Style Sheets, two technologies designed to help separate presentation from
+
+content.
+
+If you are using a word processor, you'll probably have similar capabilities.
+If you remembered to use styles to identify different document elements,
+then by applying different style sheets you can drastically alter the look of
+the final output. Most word processors now allow you to convert your
+document to formats such as HTML for Web publishing.
+
+Markup Languages
+Finally, for large-scale documentation projects, we recommend looking at
+some of the more modern schemes for marking up documentation.
+Many technical authors now use DocBook to define their documents.
+DocBook is an SGML-based markup standard that carefully identifies
+every component in a document. The document can be passed through a
+DSSSL processor to render it into any number of different formats. The
+Linux documentation project uses DocBook to publish information in RTF,
+, info, PostScript, and HTML formats.
+
+As long as your original markup is rich enough to express all the concepts
+you need (including hyperlinks), translation to any other pub-lishable form
+can be both easy and automatic. You can produce online help, published
+manuals, product highlights for the Web site, and even a tip-a-day calendar,
+all from the same source—which of course is under source control and is
+built along with the nightly build (see Ubiquitous Automation).
+Documentation and code are different views of the same underlying model,
+but the view is all that should be different. Don't let documentation become
+a second-class citizen, banished from the main project workflow. Treat
+documentation with the same care you treat code, and the users (and
+maintainers who follow) will sing your praises.
+
+Related sections include:
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+The Evils of Duplication
+Orthogonality
+The Power of Plain Text
+Source Code Control
+It's Just a View
+Programming by Coincidence
+The Requirements Pit
+Ubiquitous Automation
+
+Challenges
+•
+
+•
+
+Did you write an explanatory comment for the source code you
+just wrote? Why not? Pressed for time? Not sure if the code will really
+work—are you just trying out an idea as a prototype? You'll throw
+the code away afterwards, right? It won't make it into the project
+uncommented and experimental, will it?
+•
+Sometimes it is uncomfortable to document the design of source
+code because the design isn't clear in your mind; it's still evolving.
+You don't feel that you should waste effort describing what
+something does until it actually does it. Does this sound like
+programming by coincidence (page 172)?
+•
+
+sunderstandings during requirements analysis that need to be addressed?
+Does the software fit the user like an extension of the hand? (Not only do we
+want our own tools to fit our hands, but we want the tools we create for
+users to fit their hands as well.)
+
+As with validation and verification, you need to perform usability testing as
+early as you can, while there is still time to make corrections. For larger
+projects, you may want to bring in human factors specialists. (If nothing
+else, it's fun to play with the one-way mirrors).
+Failure to meet usability criteria is just as big a bug as dividing by zero.
+
+How to Test
+We've looked at what to test. Now we'll turn our attention to how to test,
+including:
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+Regression testing
+Test data
+Exercising GUI systems
+Testing the tests
+Testing thoroughly
+
+Design/Methodology Testing
+Can you test the design of the code itself and the methodology you
+used to build the software? After a fashion, yes you can. You do this
+by analyzing metrics—measurements of various aspects of the code.
+The simplest metric (and often the least interesting) is lines of
+code—how big is the code itself?
+There are a wide variety of other metrics you can use to examine
+code, including:
+•
+•
+•
+•
+
+McCabe Cyclomatic Complexity Metric (measures
+complexity of decision structures)
+•
+Inheritance fan-in (number of base classes) and fan-out
+(number of derived modules using this one as a parent)
+•
+Response set (see Decoupling and the Law of Demeter)
+•
+Class coupling ratios (see [URL 48])
+•
+
+Some metrics are designed to give you a "passing grade," while
+others are useful only by comparison. That is, you calculate these
+metrics for every module in the system and see how a particular
+module relates to its brethren. Standard statistical techniques
+(such as mean and standard deviation) are usually used here.
+If you find a module whose metrics are markedly different from all
+
+the rest, you need to ask yourself if that is appropriate. For some
+modules, it may be okay to "blow the curve." But for those that don't
+have a good excuse, it can indicate problems.
+
+Regression Testing
+A regression test compares the output of the current test with previous (or
+known) values. We can ensure that bugs we fixed today didn't break things
+that were working yesterday. This is an important safety net, and it cuts
+down on unpleasant surprises.
+All of the tests we've mentioned so far can be run as regression tests,
+ensuring that we haven't lost any ground as we develop new code. We can
+run regressions to verify performance, contracts, validity, and so on.
+
+Test Data
+Where do we get the data to run all these tests? There are only two kinds of
+data: real-world data and synthetic data. We actually need to use both,
+because the different natures of these kinds of data will expose different
+bugs in our software.
+Real-world data comes from some actual source. Possibly it has been
+collected from an existing system, a competitor's system, or a prototype of
+some sort. It represents typical user data. The big surprises come as you
+discover what typical means. This is most likely to reveal defects and
+misunderstandings in requirements analysis.
+Synthetic data is artificially generated, perhaps under certain statistical
+constraints. You may need to use synthetic data for any of the following
+reasons.
+•
+
+•
+
+•
+
+You need a lot of data, possibly more than any real-world sample
+could provide. You might be able to use the real-world data as a seed
+to generate a larger sample set, and tweak certain fields that need to
+be unique.
+•
+You need data to stress the boundary conditions. This data may
+be completely synthetic: date fields containing February 29, 1999,
+huge record sizes, or addresses with foreign postal codes.
+•
+You need data that exhibits certain statistical properties. Want
+to see what happens if every third transaction fails? Remember the
+sort algorithm that slows to a crawl when handed presorted data?
+•
+
+You can present data in random or sorted order to expose this kind of
+weakness.
+
+Exercising GUI Systems
+Testing GUI-intensive systems often requires specialized testing tools.
+These tools may be based on a simple event capture/playback model, or they
+may require specially written scripts to drive the GUI. Some systems
+combine elements of both.
+Less sophisticated tools enforce a high degree of coupling between the
+version of software being tested and the test script itself: if you move a
+dialog box or make a button smaller, the test may not be able to find it, and
+may fall. Most modern GUI testing tools use a number of different
+techniques to get around this problem, and try to adjust to minor layout
+differences.
+However, you can't automate everything. Andy worked on a graphics
+system that allowed the user to create and display nondeterministic visual
+effects which simulated various natural phenomena. Unfortunately, during
+testing you couldn't just grab a bitmap and compare the output with a
+previous run, because it was designed to be different every time. For
+situations such as this one, you may have no choice but to rely on manual
+interpretation of test results.
+One of the many advantages of writing decoupled code (see Decoupling and
+the Law of Demeter) is more modular testing. For instance, for data
+processing applications that have a GUI front end, your design should be
+decoupled enough so that you can test the application logic without having
+a GUI present. This idea is similar to testing your subcomponents first.
+Once the application logic has been validated, it becomes easier to locate
+bugs that show up with the user interface in place (it's likely that the bugs
+were created by the user-interface code).
+
+Testing the Tests
+Because we can't write perfect software, it follows that we can't write
+perfect test software either. We need to test the tests.
+Think of our set of test suites as an elaborate security system, designed to
+sound the alarm when a bug shows up. How better to test a security system
+than to try to break in?
+
+After you have written a test to detect a particular bug, cause the bug
+deliberately and make sure the test complains. This ensures that the test
+will catch the bug if it happens for real.
+Tip 64
+Use Saboteurs to Test Your Testing
+
+If you are really serious about testing, you might want to appoint a project
+saboteur. The saboteur's role is to take a separate copy of the source tree,
+introduce bugs on purpose, and verify that the tests will catch them.
+When writing tests, make sure that alarms sound when they should.
+
+Testing Thoroughly
+Once you are confident that your tests are correct, and are finding bugs you
+create, how do you know if you have tested the code base thoroughly
+enough?
+The short answer is "you don't," and you never will. But there are products
+on the market that can help. These coverage analysis tools watch your code
+during testing and keep track of which lines of code have been executed and
+which haven't. These tools help give you a general feel for how
+comprehensive your testing is, but don't expect to see 100% coverage.
+Even if you do happen to hit every line of code, that's not the whole picture.
+What is important is the number of states that your program may have.
+States are not equivalent to lines of code. For instance, suppose you have a
+function that takes two integers, each of which can be a number from 0 to
+999.
+
+int test(int a, int b) {
+return a / (a + b);
+}
+
+In theory, this three-line function has 1,000,000 logical states, 999,999 of
+which will work correctly and one that will not (when a + b equals zero).
+Simply knowing that you executed this line of code doesn't tell you
+that—you would need to identify all possible states of the program.
+
+Unfortunately, in general this is a really hard problem. Hard as in, "The
+sun will be a cold hard lump before you can solve it."
+Tip 65
+Test State Coverage, Not Code Coverage
+
+Even with good code coverage, the data you use for testing still has a huge
+impact, and, more importantly, the order in which you traverse code may
+have the largest impact of all.
+
+When to Test
+Many projects tend to leave testing to the last minute—right where it will
+be cut against the sharp edge of a deadline.[8] We need to start much sooner
+than that. As soon as any production code exists, it needs to be tested.
+[8] dead.line \ded-lîn\ n (1864) a line drawn within or around a prison that a prisoner passes at the risk of being
+
+shot—Webster's Collegiate Dictionary.
+
+Most testing should be done automatically. It's important to note that by
+"automatically" we mean that the test results are interpreted automatically
+as well. See Ubiquitous Automation, for more on this subject.
+We like to test as frequently as we can, and always before we check code
+into the source repository. Some source code control systems, such as Aegis,
+can do this automatically. Otherwise, we just type
+
+% make test
+
+Usually, it isn't a problem to run regressions on all of the individual unit
+tests and integration tests as often as needed.
+But some tests may not be easily run on a such a frequent basis. Stress
+tests, for instance, may require special setup or equipment, and some hand
+holding. These tests may be run less often—weekly or monthly, perhaps.
+But it is important that they be run on a regular, scheduled basis. If it can't
+be done automatically, then make sure it appears on the schedule, with all
+the necessary resources allocated to the task.
+
+Tightening the Net
+Finally, we'd like to reveal the single most important concept in testing. It
+is an obvious one, and virtually every textbook says to do it this way. But
+for some reason, most projects still do not.
+If a bug slips through the net of existing tests, you need to add a new test to
+trap it next time.
+Tip 66
+Find Bugs Once
+
+Once a human tester finds a bug, it should be the last time a human tester
+finds that bug. The automated tests should be modified to check for that
+particular bug from then on, every time, with no exceptions, no matter how
+trivial, and no matter how much the developer complains and says, "Oh,
+that will never happen again."
+Because it will happen again. And we just don't have the time to go chasing
+after bugs that the automated tests could have found for us. We have to
+spend our time writing new code—and new bugs.
+
+Related sections include:
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+The Cat Ate My Source Code
+Debugging
+Decoupling and the Law of Demeter
+Refactoring
+Code That's Easy to Test
+Ubiquitous Automation
+
+Challenges
+•
+
+Can you automatically test your project? Many teams are forced
+to answer "no." Why? Is it too hard to define the acceptable results?
+Won't this make it hard to prove to the sponsors that the project is
+"done"?
+
+•
+
+Is it too hard to test the application logic independent of the GUI?
+What does this say about the GUI? About coupling?
+
+Great Expectations
+Be astonished, O ye heavens, at this, and be horribly afraid…
+Jeremiah 2:12
+A company announces record profits, and its share price drops 20%. The
+financial news that night explains that the company failed to meet
+analysts' expectations. A child opens an expensive Christmas present and
+bursts into tears—it wasn't the cheap doll the child was hoping for. A
+project team works miracles to implement a phenomenally complex
+application, only to have it shunned by its users because it doesn't have a
+help system.
+In an abstract sense, an application is successful if it correctly implements
+its specifications. Unfortunately, this pays only abstract bills.
+In reality, the success of a project is measured by how well it meets the
+expectations of its users. A project that falls below their expectations is
+deemed a failure, no matter how good the deliverable is in absolute terms.
+However, like the parent of the child expecting the cheap doll, go too far and
+you'll be a failure, too.
+Tip 69
+Gently Exceed Your Users' Expectations
+
+However, the execution of this tip requires some work.
+
+Communicating Expectations
+Users initially come to you with some vision of what they want. It may be
+incomplete, inconsistent, or technically impossible, but it is theirs, and, like
+the child at Christmas, they have some emotion invested in it. You cannot
+just ignore it.
+As your understanding of their needs develops, you'll find areas where their
+expectations cannot be met, or where their expectations are perhaps too
+conservative. Part of your role is to communicate this. Work with your
+users so that their understanding of what you'll be delivering is accurate.
+And do this throughout the development process. Never lose sight of the
+business problems your application is intended to solve.
+
+Some consultants call this process "managing expectations"—actively
+controlling what users should hope to get from their systems. We think this
+is a somewhat elitist position. Our role is not to control the hopes of our
+users. Instead, we need to work with them to come to a common
+understanding of the development process and the final deliverable, along
+with those expectations they have not yet verbalized. If the team is
+communicating fluently with the outside world, this process is almost
+automatic; everyone should understand what's expected and how it will be
+built.
+There are some important techniques that can be used to facilitate this
+process. Of these, Tracer Bullets, and Prototypes and Post-it Notes, are the
+most important. Both let the team construct something that the user can
+see. Both are ideal ways of communicating your understanding of their
+requirements. And both let you and your users practice communicating
+with each other.
+
+The Extra Mile
+If you work closely with your users, sharing their expectations and
+communicating what you're doing, then there will be few surprises when
+the project gets delivered.
+This is a BAD THING. Try to surprise your users. Not scare them, mind you,
+but delight them.
+Give them that little bit more than they were expecting. The extra bit of
+effort it requires to add some user-oriented feature to the system will pay
+for itself time and time again in goodwill.
+Listen to your users as the project progresses for clues about what features
+would really delight them. Some things you can add relatively easily that
+look good to the average user include:
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+Balloon or ToolTip help
+Keyboard shortcuts
+A quick reference guide as a supplement to the user's manual
+Colorization
+Log file analyzers
+Automated installation
+Tools for checking the integrity of the system
+The ability to run multiple versions of the system for training
+A splash screen customized for their organization
+
+All of these things are relatively superficial, and don't really overburden
+the system with feature bloat. However, each tells your users that the
+development team cared about producing a great system, one that was
+intended for real use. Just remember not to break the system adding these
+new features.
+
+Related sections include:
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+Good-Enough Software
+Tracer Bullets
+Prototypes and Post-it Notes
+The Requirements Pit
+
+Challenges
+•
+
+•
+
+Sometimes the toughest critics of a project are the people who
+worked on it. Have you ever experienced disappointment that your
+own expectations weren't met by something you produced? How
+could that be? Maybe there's more than logic at work here.
+•
+What do your users comment on when you deliver software? Is
+their attention to the various areas of the application proportional to
+the effort you invested in each? What delights them?
+•
+
+Pride and Prejudice
+You have delighted us long enough.
+Jane Austen, Pride and Prejudice
+Pragmatic Programmers don't shirk from responsibility. Instead, we rejoice
+in accepting challenges and in making our expertise well known. If we are
+responsible for a design, or a piece of code, we do a job we can be proud of.
+Tip 70
+Sign Your Work
+
+Craftsmen of an earlier age were proud to sign their work. You should be,
+too.
+Project teams are still made up of people, however, and this rule can cause
+trouble. On some projects, the idea of code ownership can cause cooperation
+
+problems. People may become territorial, or unwilling to work on common
+foundation elements. The project may end up like a bunch of insular little
+fiefdoms. You become prejudiced in favor of your code and against your
+coworkers.
+That's not what we want. You shouldn't jealously defend your code against
+interlopers; by the same token, you should treat other people's code with
+respect. The Golden Rule ("Do unto others as you would have them do unto
+you") and a foundation of mutual respect among the developers is critical to
+make this tip work.
+Anonymity, especially on large projects, can provide a breeding ground for
+sloppiness, mistakes, sloth, and bad code. It becomes too easy to see
+yourself as just a cog in the wheel, producing lame excuses in endless status
+reports instead of good code.
+While code must be owned, it doesn't have to be owned by an individual. In
+fact, Kent Beck's successful eXtreme Programming method [URL 45]
+recommends communal ownership of code (but this also requires additional
+practices, such as pair programming, to guard against the dangers of
+anonymity).
+We want to see pride of ownership. "I wrote this, and I stand behind my
+work." Your signature should come to be recognized as an indicator of
+quality. People should see your name on a piece of code and expect it to be
+solid, well written, tested, and documented. A really professional job.
+Written by a real professional.
+A Pragmatic Programmer.
+
+Appendix A. Resources
+The only reason we were able to cover so much ground in this book is that
+we viewed many of our subjects from a high altitude. If we'd given them the
+in-depth coverage they deserved, the book would have been ten times
+longer.
+We started the book with the suggestion that Pragmatic Programmers
+should always be learning. In this appendix we've listed resources that may
+help you with this process.
+In the section Professional Societies, we give details of the IEEE and the
+ACM. We recommend that Pragmatic Programmers join one (or both) of
+these societies. Then, in Building a Library, we highlight periodicals, books,
+and Web sites that we feel contain high-quality and pertinent information
+(or that are just plain fun).
+Throughout the book we referenced many software resources accessible via
+the Internet. In the Internet Resources section, we list the URLs of these
+resources, along with a short description of each. However, the nature of
+the Web means that many of these links may well be stale by the time you
+read this book. You could try one of the many search engines for a more
+up-to-date link, or visit our Web site at www.pragmaticprogrammer.com
+and check our links section.
+Finally, this appendix contains the book's bibliography.
+
+Professional Societies
+There are two world-class professional societies for programmers: the
+Association for Computing Machinery (ACM)[1] and the IEEE Computer
+Society.[2] We recommend that all programmers belong to one (or both) of
+these societies. In addition, developers outside the United States may want
+to join their national societies, such as the BCS in the United Kingdom.
+[1] ACM Member Services, PO Box 11414, New York, NY 10286, USA.
+
+www.acm.org
+
+[2] 1730 Massachusetts Avenue NW, Washington, DC 20036-1992, USA.
+
+www.computer.org
+
+Membership in a professional society has many benefits. The conferences
+and local meetings give you great opportunities to meet people with similar
+
+interests, and the special interest groups and technical committees give you
+the opportunity to participate in setting standards and guidelines used
+around the world. You'll also get a lot out of their publications, from
+high-level discussions of industry practice to low-level computing theory.
+
+Building a Library
+We're big on reading. As we noted in Your Knowledge Portfolio, a good
+programmer is always learning. Keeping current with books and
+periodicals can help. Here are some that we like.
+
+Periodicals
+If you're like us, you'll save old magazines and periodicals until they're
+piled high enough to turn the bottom ones to flat sheets of diamond. This
+means it's worth being fairly selective. Here are a few periodicals we read.
+•
+
+•
+•
+
+•
+
+•
+
+•
+•
+
+IEEE Computer. Sent to members of the IEEE Computer
+Society, Computer has a practical focus but is not afraid of theory.
+Some issues are oriented around a theme, while others are simply
+collections of interesting articles. This magazine has a good
+signal-to-noise ratio.
+•
+IEEE Software. This is another great bimonthly publication of
+the IEEE Computer Society aimed at software practitioners.
+•
+Communications of the ACM. The basic magazine received by
+all members of the ACM, CACM has been a standard in the industry
+for decades, and has probably published more seminal articles than
+any other source.
+•
+SIGPLAN. Produced by the ACM Special Interest Group on
+Programming Languages, SIGPLAN is an optional addition to your
+ACM membership. It is often used for publishing language
+specifications, along with articles of interest to everyone who likes
+looking deeply into programming.
+•
+Dr. Dobbs Journal. A monthly magazine, available by
+subscription and on newsstands, Dr. Dobbs is quirky, but has
+articles ranging from bit-level practice to heavy theory.
+•
+The Perl Journal. If you like Perl, you should probably
+subscribe to The Perl Journal (www.tpj.com).
+•
+Software Development Magazine. A monthly magazine
+focusing on general issues of project management and software
+development.
+•
+
+Weekly Trade Papers
+There are several weekly newspapers published for developers and their
+managers. These papers are largely a collection of company press releases,
+redressed as articles. However, the content is still valuable—it lets you
+track what is going on, keep abreast of new product announcements, and
+follow industry alliances as they are forged and broken. Don't expect a lot of
+in-depth technical coverage, though.
+
+Books
+Computing books can be expensive, but choose carefully and they're a
+worthwhile investment. Here are a handful of the many we like.
+
+Analysis and Design
+•
+
+•
+
+•
+
+Object-Oriented Software Construction, 2nd
+Edition. Bertrand Meyer's epic book on the fundamentals of
+object-oriented development, all in about 1,300 pages [Mey97b].
+•
+Design Patterns. A design pattern describes a way to solve a
+particular class of problems at a higher level than a programming
+language idiom. This now-classic book [GHJV95] by the Gang of
+Four describes 23 basic design patterns, including Proxy, Visitor,
+and Singleton.
+•
+Analysis Patterns. A treasure trove of high-level, architectural
+patterns taken from a wide variety of real-world projects and
+distilled in book form. A relatively quick way to gain the insight of
+many years of modeling experience [Fow96].
+•
+
+Teams and Projects
+•
+•
+
+•
+
+The Mythical Man Month. Fred Brooks' classic on the perils of
+organizing project teams, recently updated [Bro95].
+•
+Dynamics of Software Development. A series of short essays
+on building software in large teams, focusing on the dynamics
+between team members, and between the team and the rest of the
+world [McC95].
+•
+Surviving Object-Oriented Projects: A Manager's
+Guide. Alistair Cockburn's "reports from the trenches" illustrate
+many of the perils and pitfalls of managing an OO project—
+•
+
+especially your first one. Mr. Cockburn provides tips and techniques
+to get you through the most common problems [Coc97b].
+
+Specific Environments
+•
+
+•
+
+•
+
+Unix. W. Richard Stevens has several excellent books
+including Advanced Programming in the Unix Environment and the
+Unix Network Programming books [Ste92, Ste98, Ste99].
+•
+Windows. Marshall Brain's Win32 System Services [Bra95] is
+a concise reference to the low-level APIs. Charles Petzold's
+Programming Windows [Pet98] is the bible of Windows GUI
+development.
+•
+C++. As soon as you find yourself on a C++ project, run, don't
+walk, to the bookstore and get Scott Meyer's Effective C++, and
+possibly More Effective C++ [Mey97a, Mey96]. For building systems
+of any appreciable size, you need John Lakos' Large-Scale C++
+Software Design [Lak96]. For advanced techniques, turn to Jim
+Coplien's Advanced C++ Programming Styles and Idioms [Cop92],
+•
+
+In addition, the O'Reilly Nutshell series (www.ora.com) gives quick,
+comprehensive treatments of miscellaneous topics and languages such as
+perl, yacc, sendmail, Windows internals, and regular expressions.
+
+The Web
+Finding good content on the Web is hard. Here are several links that we
+check at least once a week.
+•
+
+Slashdot. Billed as "News for nerds. Stuff that matters,"
+Slashdot is one of the net homes of the Linux community. As well as
+regular updates on Linux news, the site offers information on
+technologies that are cool and issues that affect developers.
+
+•
+
+www.slashdot.org
+•
+
+•
+
+Cetus Links.
+
+Thousands of links on object-oriented topics.
+
+www.cetus-links.org
+•
+
+WikiWikiWeb. The Portland Pattern Repository and patterns
+discussion. Not just a great resource, the WikiWikiWeb site is an
+interesting experiment in collective editing of ideas.
+
+•
+
+www.c2.com
+
+Internet Resources
+The links below are to resources available on the Internet. They were valid
+at the time of writing, but (the Net being what it is) they may well be out of
+date by the time you read this. If so, you could try a general search for the
+filenames, or come to the Pragmatic Programmer Web site
+(www.pragmaticprogrammer.com) and follow our links.
+
+Editors
+Emacs and vi are not the only cross-platform editors, but they are freely
+available and widely used. A quick scan through a magazine such as Dr.
+Dobbs will turn up several commercial alternatives.
+
+Emacs
+Both Emacs and XEmacs are available on Unix and Windows platforms.
+
+[URL l] The Emacs Editor
+www.gnu.org
+The ultimate in big editors, containing every feature that any editor has
+ever had, Emacs has a near-vertical learning curve, but repays handsomely
+once you've mastered it. It also makes a great mall and news reader,
+address book, calendar and diary, adventure game, ….
+
+[URL 2] The XEmacs Editor
+www.xemacs.org
+Spawned from the original Emacs some years ago, XEmacs is reputed to
+have cleaner internals and a better-looking interface.
+
+vi
+There are at least 15 different vi clones available. Of these, vim is probably
+ported to the most platforms, and so would be a good choice of editor if you
+find yourself working in many different environments.
+
+[URL 3] The Vim Editor
+ftp://ftp.fu-berlin.de/misc/editors/vim
+From the documentation: "There are a lot of enhancements above vi: multi
+level undo, multi windows and buffers, syntax highlighting, command line
+editing, filename completion, on-line help, visual selection, etc…."
+
+[URL 4] The elvis Editor
+www.fh-wedel.de/elvis
+An enhanced vi clone with support for X.
+
+[URL 5] Emacs Viper Mode
+http://www.cs.sunysb.edu/~kifer/emacs.html
+Viper is a set of macros that make Emacs look like vi. Some may doubt the
+wisdom of taking the world's largest editor and extending it to emulate an
+editor whose strength is its compactness. Others claim it combines the best
+of both worlds.
+
+Compilers, Languages, and Development Tools
+[URL 6] The GNU C/C++ Compiler
+www.fsf.org/software/gcc/gcc.html
+One of the most popular C and C++ compilers on the planet. It also does
+Objective-C. (At the time of writing, the egcs project, which previously
+splintered from gcc, is in the process of merging back into the fold.)
+
+[URL 7] The Java Language from Sun
+java.sun.com
+Home of Java, including downloadable SDKs, documentation, tutorials,
+news, and more.
+
+[URL 8] Perl Language Home Page
+www.perl.com
+O'Reilly hosts this set of Peri-related resources.
+
+[URL 9] The Python Language
+www.python.org
+The Python object-oriented programming language is interpreted and
+interactive, with a slightly quirky syntax and a wide and loyal following.
+
+[URL 10] SmallEiffel
+SmallEiffel.loria.fr
+The GNU Eiffel compiler runs on any machine that has an ANSI C compiler
+and a Posix runtime environment.
+
+[URL 11] ISE Eiffel
+www.eiffel.com
+Interactive Software Engineering is the originator of Design by Contract,
+and sells a commercial Eiffel compiler and related tools.
+
+[URL 12] Sather
+www.icsi.berkeley.edu/~sather
+Sather is an experimental language that grew out of Eiffel. It aims to
+support higher-order functions and iteration abstraction as well as
+Common Lisp, CLU, or Scheme, and to be as efficient as C, C++, or Fortran.
+
+[URL 13] VisualWorks
+www.objectshare.com
+
+Home of the VisualWorks Smalltalk environment. Noncommercial versions
+for Windows and Linux are available for free.
+
+[URL 14] The Squeak Language Environment
+squeak.cs.uiuc.edu
+Squeak is a freely available, portable implementation of Smalltalk-80
+written in itself; it can produce C code output for higher performance.
+
+[URL 15] The TOM Programming Language
+www.gerbil.org/tom
+A very dynamic language with roots in Objective-C.
+
+[URL 16] The Beowulf Project
+www.beowulf.org
+A project that builds high-performance computers out of networked clusters
+of inexpensive Linux boxes.
+
+[URL 17] iContract—Design by Contract Tool for Java
+www.reliable-systems.com
+Design by Contract formalism of preconditions, postconditions, and
+invariants, implemented as a preprocessor for Java. Honors inheritance,
+implements existential quantifiers, and more.
+
+[URL 18] Nana—Logging and Assertions for C and C++
+www.cs.ntu.edu.au/homepages/pjm/nana-home/index.html
+Improved support for assertion checking and logging in C and C++. It also
+provides some support for Design by Contract.
+
+[URL 19] DDD–Data Display Debugger
+
+www.cs.tu-bs.de/softech/ddd
+A free graphical front end for Unix debuggers.
+
+[URL 20] John Brant's Refactoring Browser
+st-www.cs.uiuc.edu/users/brant/Refactory
+A popular refactoring browser for Smalltalk.
+
+[URL 21 ] DOC++ Documentation Generator
+www.zib.de/Visual/software/doc++/index.html
+DOC++ is a documentation system for C/C++ and Java that generates both
+and HTML output for sophisticated online browsing of your
+documentation directly from the C++ header or Java class flies.
+
+[URL 22] xUnit–Unit Testing Framework
+www.XProgranming.com
+A simple but powerful concept, the xUnit unit testing framework provides a
+consistent platform for testing software written in a variety of languages.
+
+[URL 23] The Tcl Language
+www.scriptics.com
+Tcl ("Tool Command Language") is a scripting language designed to be easy
+to embed into an application.
+
+[URL 24] Expect—Automate Interaction with Programs
+expect.nist.gov
+An extension built on Tcl [URL 23], expect allows you to script interaction
+with programs. As well as helping you write command flies that (for
+example) fetch files from remote servers or extend the power of your shell,
+expect can be useful when performing regression testing. A graphical
+
+version, expectk, lets you wrap non-GUI applications with a windowing
+front end.
+
+[URL 25] T Spaces
+www.almaden.ibm.com/cs/TSpaces
+From their Web page: "T Spaces is a network communication buffer with
+database capabilities. It enables communication between applications and
+devices in a network of heterogeneous computers and operating systems. T
+Spaces provides group communication services, database services,
+URL-based file transfer services, and event notification services."
+
+[URL 26] javaCC—Java Compiler-Compiler
+www.metamata.com/javacc
+A parser generator that is tightly coupled to the Java language.
+
+[URL 27] The bison Parser Generator
+www.gnu.org/software/bison/bison.html
+bison takes an input grammar specification and generates from it the C
+
+source code of a suitable parser.
+
+[URL 28] SWIG—Simplified Wrapper and Interface Generator
+www.swig.org
+SWIG is a software development tool that connects programs written in C,
+C++, and Objective-C with a variety of high-level programming languages
+such as Perl, Python, and Tcl/Tk, as well as Java, Eiffel, and Guile.
+
+[URL 29] The Object Management Group, Inc.
+www.omg.org
+The OMG is the steward of various specifications for producing distributed
+object-based systems. Their work includes the Common Object Request
+Broker Architecture (CORBA) and the Internet Inter-ORB Protocol (IIOP).
+
+Combined, these specifications make it possible for objects to communicate
+with each other, even if they are written in different languages and run on
+different types of computers.
+
+Unix Tools Under DOS
+[URL 30] The UWIN Development Tools
+www.gtlinc.com/Products/Uwin/uwin.html
+
+Global Technologies, Inc., Old Bridge, NJ
+The UWIN package provides Windows Dynamic Link Libraries (DLLs) that
+emulate a large portion of the Unix C level library interface. Using this
+interface, GTL has ported a large number of Unix command-line tools to
+Windows. See also [URL 31].
+
+[URL 31 ] The Cygnus Cygwin Tools
+sourceware.cygnus.com/cygwin/
+
+Cygnus Solutions, Sunnyvale, CA
+The Cygnus package also emulates the the Unix C library interface, and
+provides a large array of Unix command-line tools under the Windows
+operating system.
+
+[URL 32] Perl Power Tools
+www.perl.com/pub/language/ppt/
+A project to reimplement the classic Unix command set in Perl, making the
+commands available on all platforms that support Perl (and that's a lot of
+platforms).
+
+Source Code Control Tools
+[URL 33] RCS—Revision Control System
+prep.ai.mit.edu
+
+GNU source code control system for Unix and Windows NT.
+
+[URL 34] CVS—Concurrent Version System
+www.cvshome.com
+Freely available source code control system for Unix and Windows NT.
+Extends RCS by supporting a client-server model and concurrent access to
+files.
+
+[URL 35] Aegis Transaction-Based Configuration Management
+http://www.canb.auug.org.au/~millerp/aegis.html
+A process-oriented revision control tool that imposes project standards
+(such as verifying that checked-in code passes tests).
+
+[URL 36] ClearCase
+www.rational.com
+Version control, workspace and build management, process control.
+
+[URL 37] MKS Source Integrity
+www.mks.com
+Version control and configuration management. Some versions incorporate
+features allowing remote developers to work on the same files
+simultaneously (much like CVS).
+
+[URL 38] PVCS Configuration Management
+www.merant.com
+A source code control system, very popular for Windows systems.
+
+[URL 39] Visual SourceSafe
+www.microsoft.com
+
+A version control system that integrates with Microsoft's visual
+development tools.
+
+[URL 40] Perforce
+www.perforce.com
+A client-server software configuration management system.
+
+Other Tools
+[URL 41] WinZip—Archive Utility for Windows
+www.winzip.com
+
+Nico Mak Computing, Inc., Mansfield, CT
+A Windows-based file archive utility. Supports both zip and tar formats.
+
+[URL 42] The Z Shell
+sunsite.auc.dk/zsh
+A shell designed for interactive use, although it is also a powerful scripting
+language. Many of the useful features of bash, ksh, and tcsh were
+incorporated into zsh; many original features were added.
+
+[URL 43] A Free SMB Client for Unix Systems
+samba.anu.edu.au/pub/samba/
+Samba lets you share files and other resources between Unix and Windows
+systems. Samba includes:
+An SMB server, to provide Windows NT and LAN
+Manager-style file and print services to SMB clients such as
+Windows 95, Warp Server, smbfs, and others.
+• •
+A Netbios nameserver, which among other things gives
+browsing support. Samba can be the master browser on your
+LAN if you wish.
+• •
+
+• •
+
+An ftp-like SMB client that allows you to access PC
+resources (disks and printers) from Unix, Netware, and other
+operating systems.
+
+Papers and Publications
+[URL 44] The comp.object FAQ
+www.cyberdyne-object-sys.com/oofaq2
+A substantial and well-organized FAQ for the comp.object newsgroup.
+
+[URL 45] eXtreme Programming
+www.XProgramming.com
+From the Web site: "In XP, we use a very lightweight combination of
+practices to create a team that can rapidly produce extremely reliable,
+efficient, well-factored software. Many of the XP practices were created and
+tested as part of the Chrysler C3 project, which is a very successful payroll
+system implemented in Smalltalk."
+
+[URL 46] Alistair Cockburn's Home Page
+members.aol.com/acockburn
+Look for "Structuring Use Cases with Goals" and use case templates.
+
+[URL 47] Martin Fowler's Home Page
+ourworld.CompuServe.com/homepages/martin_fowler
+Author of Analysis Patterns and co-author of UML Distilled and
+Refactoring: Improving the Design of Existing Code. Martin Fowler's home
+page discusses his books and his work with the UML.
+
+[URL 48] Robert C. Martin's Home Page
+www.objectmentor.com
+
+Good introductory papers on object-oriented techniques, including
+dependency analysis and metrics.
+
+[URL 49] Aspect-Oriented Programming
+www.pare.xerox.com/csl/projects/aop/
+An approach to adding functionality to code, both orthogonally and
+declaratively.
+
+[URL 50] JavaSpaces Specification
+java.sun.com/products/javaspaces
+A Linda-like system for Java that supports distributed persistence and
+distributed algorithms.
+
+[URL 51] Netscape Source Code
+www.mozilla.org
+The development source of the Netscape browser.
+
+[URL 52] The Jargon File
+www.jargon.org
+
+Eric S. Raymond
+Definitions for many common (and not so common) computer industry
+terms, along with a good dose of folklore.
+
+[URL 53] Eric S. Raymond's Papers
+www.tuxedo.org/~esr
+Eric's papers on The Cathedral and the Bazaar and Homesteading the
+Noo-sphere describing the psychosocietal basis for and implications of the
+Open Source movement.
+
+[URL 54] The K Desktop Environment
+www.kde.org
+From their Web page: "KDE is a powerful graphical desktop environment
+for Unix workstations. KDE is an Internet project and truly open in every
+sense."
+
+[URL 55] The GNU Image Manipulation Program
+www.gimp.org
+Gimp is a freely distributed program used for image creation, composition,
+and retouching.
+
+[URL 56] The Demeter Project
+www.ccs.neu.edu/research/demeter
+Research focused on making software easier to maintain and evolve using
+Adaptive Programming.
+
+Miscellaneous
+[URL 57] The GNU Project
+www.gnu.org
+
+Free Software Foundation, Boston, MA
+The Free Software Foundation is a tax-exempt charity that raises funds for
+the GNU project. The GNU project's goal is to produce a complete, free,
+Unix-like system. Many of the tools they've developed along the way have
+become industry standards.
+
+[URL 58] Web Server Information
+www.netcraft.com/survey/servers.html
+
+Links to the home pages of over 50 different web servers. Some are
+commercial products, while others are freely available.
+
+Bibliography
+[Bak72] F. T. Baker. Chief programmer team management of production
+programming. IBM Systems Journal, ll(l):56–73, 1972.
+[Bbm96] V. Basili, L. Briand, and W. L. Melo. A validation of
+object-oriented design metrics as quality indicators. IEEE Transactions on
+Software Engineering, 22(10):751–761, October 1996.
+[Ber96] Albert J. Bernstein. Dinosaur Brains: Dealing with All Those
+Impossible People at Work. Ballantine Books, New York, NY, 1996.
+[Bra95] Marshall Brain. Win32 System Services. Prentice Hall, Englewood
+Cliffs, NJ, 1995.
+[Bro95] Frederick P. Brooks Jr. The Mythical Man Month: Essays on
+Software Engineering. Addison-Wesley, Reading, MA, anniversary edition,
+1995.
+[CG90] N. Carriero and D. Gelenter. How to Write Parallel Programs: A
+First Course. MIT Press, Cambridge, MA, 1990.
+[CN91] Brad J. Cox and Andrex J. Novobilski. Object-Oriented
+Programming, An Evolutionary Approach. Addison-Wesley, Reading, MA,
+1991.
+[Coc97a] Alistair Cockburn. Goals and use cases. Journal of Object
+Oriented Programming, 9(7):35–40, September 1997.
+[Coc97b] Alistair Cockburn. Surviving Object-Oriented Projects: A
+Manager's Guide. Addison Wesley Longman, Reading, MA, 1997.
+[Cop92] James O. Coplien. Advanced C++ Programming Styles and Idioms.
+Addison-Wesley, Reading, MA, 1992.
+[DL99] Tom Demarco and Timothy Lister. Peopleware: Productive Projects
+and Teams. Dorset House, New York, NY, second edition, 1999..
+[FBB+99] Martin Fowler, Kent Beck, John Brant, William Opdyke and Don
+Roberts. Refactoring: Improving the Design of Existing Code. Addison
+Wesley Longman, Reading, MA, 1999.
+[Fow96] Martin Fowler. Analysis Patterns: Reusable Object Models.
+Addison Wesley Longman, Reading, MA, 1996.
+
+[FS97] Martin Fowler and Kendall Scott. UML Distilled: Applying the
+Standard Object Modeling Language. Addison Wesley Longman, Reading,
+MA, 1997.
+[GHJV95] Erich Gamma, Richard Helm, Ralph Johnson and John Vlissides.
+
+Design Patterns: Elements of Reusable Object-Oriented Software.
+Addison-Wesley, Reading, MA, 1995.
+[Gla99a] Robert L. Glass. Inspections—Some surprising findings.
+Communications of the ACM, 42(4): 17–19, April 1999.
+[Gla99b] Robert L. Glass. The realities of software technology payoffs.
+Communications of the ACM, 42(2):74–79, February 1999.
+[Hol78] Michael Holt. Math Puzzles and Games. Dorset Press, New York,
+NY, 1978.
+[Jac94] Ivar Jacobson. Object-Oriented Software Engineering: A Use-Case
+Driven Approach. Addison-Wesley, Reading, MA, 1994.
+[KLM+97] Gregor Kiczales, John Lamping, Anurag Mendhekar, Chris
+Maeda, Cristina Videira Lopes, Jean-Marc Loingtier and John Irwin.
+Aspect-oriented programming. In European Conference on Object-Oriented
+Programming (ECOOP), volume LNCS 1241. Springer-Verlag, June 1997.
+[Knu97a] Donald Ervin Knuth. The Art of Computer Programming:
+Fundamental Algorithms, volume 1. Addison Wesley Longman, Reading,
+MA, third edition, 1997.
+[Knu97b] Donald Ervin Knuth. The Art of Computer Programming:
+Seminumerical Algorithms, volume 2. Addison Wesley Longman, Reading,
+MA, third edition, 1997.
+[Knu98] Donald Ervin Knuth. The Art of Computer Programming: Sorting
+and Searching, volume 3. Addison Wesley Longman, Reading, MA, second
+edition, 1998.
+[KP99] Brian W. Kernighan and Rob Pike. The Practice of Programming.
+Addison Wesley Longman, Reading, MA, 1999.
+[Kru98] Philippe Kruchten. The Rational Unified Process: An Introduction.
+Addison Wesley Longman, Reading, MA, 1998.
+[Lak96] John Lakos. Large-Scale C++ Software Design. Addison Wesley
+Longman, Reading, MA, 1996.
+
+[LH89] Karl J. Lieberherr and Ian Holland. Assuring good style for
+object-oriented programs. IEEE Software, pages 38–48, September 1989.
+[Lis88] Barbara Liskov. Data abstraction and hierarchy. SIGPLAN Notices,
+23(5), May 1988.
+[LMB92] John R. Levine, Tony Mason and Doug Brown. Lex and Yacc.
+O'Reilly & Associates, Inc., Sebastopol, CA, second edition, 1992.
+[McC95] Jim McCarthy. Dynamics of Software Development. Microsoft
+Press, Redmond, WA, 1995.
+[Mey96] Scott Meyers. More Effective C++: 35 New Ways to Improve Your
+Programs and Designs. Addison-Wesley, Reading, MA, 1996.
+[Mey97a] Scott Meyers. Effective C++: 50 Specific Ways to Improve Your
+Programs and Designs. Addison Wesley Longman, Reading, MA, second
+edition, 1997.
+[Mey97b] Bertrand Meyer. Object-Oriented Software Construction.
+Prentice Hall, Englewood Cliffs, NJ, second edition, 1997.
+[Pet98] Charles Petzold. Programming Windows, The Definitive Guide to
+the Win32 API. Microsoft Press, Redmond, WA, fifth edition, 1998.
+[Sch95] Bruce Schneier. Applied Cryptography: Protocols, Algorithms, and
+Source Code in C. John Wiley & Sons, New York, NY, second edition, 1995.
+[Sed83] Robert Sedgewick. Algorithms. Addison-Wesley, Reading, MA,
+1983.
+[Sed92] Robert Sedgewick. Algorithms in C++. Addison-Wesley, Reading,
+MA, 1992.
+[SF96] Robert Sedgewick and Phillipe Flajolet. An Introduction to the
+Analysis of Algorithms. Addison-Wesley, Reading, MA, 1996.
+[Ste92] W. Richard Stevens. Advanced Programming in the Unix
+Environment. Addison-Wesley, Reading, MA, 1992.
+[Ste98] W. Richard Stevens. Unix Network Programming, Volume 1:
+Networking APIs: Sockets and Xti. Prentice Hall, Englewood Cliffs, NJ,
+second edition, 1998.
+
+[Ste99] W. Richard Stevens. Unix Network Programming, Volume 2:
+Interprocess Communications. Prentice Hall, Englewood Cliffs, NJ, second
+edition, 1999.
+[Str35] James Ridley Stroop. Studies of interference in serial verbal
+reactions. Journal of Experimental Psychology, 18:643–662, 1935.
+[WK82] James Q. Wilson and George Kelling. The police and neighborhood
+safety. The Atlantic Monthly, 249(3):29–38, March 1982.
+[YC86] Edward Yourdon and Larry L. Constantine. Structured Design:
+
+Fundamentals of a Discipline of Computer Program and Systems Design.
+Prentice Hall, Englewood Cliffs, NJ, second edition, 1986.
+[You95] Edward Yourdon. Managing projects to produce good-enough
+software. IEEE Software, March 1995.
+
+Appendix B. Answers to Exercises
+Exercise
+1:
+
+from Orthogonality
+You are writing a class called Split, which splits input lines into
+fields. Which of the following two Java class signatures is the
+more orthogonal design?
+
+class Splitl {
+public Splitl(InputStreamReader rdr) { ...
+public void readNextLine() throws IOException { ...
+public int numFields() { ...
+public String getField(int fieldNo) { ...
+}
+class Split2 {
+public Split2(String line) { ...
+public int numFields() { ...
+public String getField(int fieldNo) { ...
+}
+
+Answer
+1:
+
+To our way of thinking, class Split2 is more orthogonal. It
+concentrates on its own task, splitting lines, and ignores details
+such as where the lines are coming from. Not only does this
+make the code easier to develop, but it also makes it more
+flexible. Split2 can split lines read from a file, generated by
+another routine, or passed in via the environment .
+
+Exercise
+2:
+
+from Orthogonality
+Which will lead to a more orthogonal design: modeless or modal
+dialog boxes?
+
+Answer
+2:
+
+If done correctly, probably modeless. A system that uses
+modeless dialog boxes will be less concerned with what is going
+on at any particular moment in time. It will likely have a better
+intermodule communications infrastructure than a modal
+system, which may have built-in assumptions about the state of
+the system—assumptions that lead to increased coupling and
+decreased orthogonality.
+
+Exercise
+3:
+
+from Orthogonality
+How about procedural languages versus object technology?
+
+Which results in a more orthogonal system?
+Answer
+3:
+
+This is a little tricky. Object technology can provide a more
+orthogonal system, but because it has more features to abuse, it
+is actually easier to create a nonorthogonal system using objects
+than it is using a procedural language. Features such as
+multiple inheritance, exceptions, operator overloading, and
+parent-method overriding (via subclassing) provide ample
+opportunity to increase coupling in nonobvious ways .
+With object technology and a little extra effort, you can achieve a
+much more orthogonal system. But while you can always write
+"spaghetti code" in a procedural language, object-oriented
+languages used poorly can add meatballs to your spaghetti.
+
+Exercise
+4:
+
+from Prototypes and Post-it Notes
+Marketing would like to sit down and brainstorm a few
+Web-page designs with you. They are thinking of clickable
+image maps to take you to other pages, and so on. But they can't
+decide on a model for the image—maybe it's a car, or a phone, or
+a house. You have a list of target pages and content; they'd like
+to see a few prototypes. Oh, by the way, you have 15 minutes.
+What tools might you use?
+
+Answer
+4:
+
+Low-tech to the rescue! Draw a few cartoons with markers on a
+whiteboard—a car, a phone, and a house. It doesn't have to be
+great art; stick-figure outlines are fine. Put Post-it notes that
+describe the contents of target pages on the clickable areas. As
+the meeting progresses, you can refine the drawings and
+placements of the Post-it notes.
+
+Exercise
+5:
+
+from Domain Languages
+We want to implement a mini-language to control a simple
+drawing package (perhaps a turtle-graphics system). The
+language consists of single-letter commands. Some commands
+are followed by a single number. For example, the following
+input would draw a rectangle.
+
+P 2
+
+# select pen 2
+
+D
+
+# pen down
+
+W 2
+
+# draw west 2cm
+
+N 1
+
+# then north 1
+
+E 2
+
+# then east 2
+
+S 1
+
+# then back south
+
+U
+
+# pen up
+
+Implement the code that parses this language. It should be
+designed so that it is simple to add new commands.
+Answer
+5:
+
+Because we want to make the language extendable, we'll make
+the parser table driven. Each entry in the table contains the
+command letter, a flag to say whether an argument is required,
+and the name of the routine to call to handle that particular
+command.
+
+typedef struct {
+char cmd;
+
+/* the command letter */
+
+int hasArg;
+
+/* does it take an argument */
+
+void (*func)(int, int); /* routine to call */
+} Command;
+static Command cmds[] = {
+{ 'P',
+
+ARG,
+
+doSelectPen },
+
+{ 'U',
+
+NO_ARG,
+
+doPenUp },
+
+{ 'D',
+
+NO_ARG,
+
+doPenDown },
+
+{ 'N',
+
+ARG,
+
+doPenDir },
+
+{ 'E',
+
+ARG,
+
+doPenDir },
+
+{ 'S',
+
+ARG,
+
+doPenDir },
+
+{ 'W',
+
+ARG,
+
+doPenDir }
+
+};
+
+The main program is pretty simple: read a line, look up the
+command, get the argument if required, then call the handler
+function.
+
+while (fgets (buff, sizeof(buff), stdin)) {
+Command *cmd = findCommand(*buff);
+if (cmd) {
+int arg = 0 ;
+if (cmd->hasArg && !getArg(buff+l, &arg)) {
+fprintf(stderr, "'%c' needs an argument\n", *buff);
+continue;
+}
+
+cmd->func(*buff, arg);
+}
+}
+
+The function that looks up a command performs a linear search of
+the table, returning either the matching entry or NULL.
+
+Command *findCommand(int cmd) {
+int i;
+for (i = 0; i < ARRAY_SIZE(cmds); i++) {
+if (cmds[i].cmd == cmd)
+return cmds + i;
+}
+fprintf (stderr, "Unknown command '%c'\n", cmd);
+return 0;
+}
+
+Finally, reading the numeric argument is pretty simple using scanf.
+int getArg(const char *buff, int *result) {
+return sscanf(buff, "%d", result) == 1;
+}
+
+Exercise
+6:
+
+from Domain Languages
+Design a BNF grammar to parse a time specification. All of the
+following examples should be accepted.
+
+4pm, 7:38pm, 23:42, 3:16, 3:16am
+
+Answer
+6:
+
+Using BNF, a time specification could be
+
+<time>
+
+::= <hour> <ampm>|
+<hour> : <minute> <ompm> |
+<hour> : <minute>
+
+<ampm>
+
+::= am | pm
+
+<hour>
+
+::= <digit> |
+<digit> <digit>
+
+<minute> ::= <digit> <digit>
+<digit>
+
+::= 0|1|2|3|4|5|6|7|8|9
+
+Exercise
+7:
+
+from Domain Languages
+Implement a parser for the BNF grammar in Exercise 6 using
+yacc, bison, or a similar parser-generator.
+
+Answer
+7:
+
+We coded our example using bison, the GNU version of yacc.
+For clarity, we're just showing the body of the parser here. Look
+at the source on our Web site for the full implementation .
+
+time:
+
+spec EOF
+{ if ($1 >= 24*60) yyerror("Time is too large");
+printf("%d minutes past midnight\n", $1);
+exit(0);
+}
+;
+
+spec:
+
+hour ':' minute
+{ $$ = $1 + $3;
+}
+| hour ':' minute ampm
+{ if ($1 > 11*60) yyerror("Hour out of range");
+$$ = $1 + $3 + $4;
+}
+| hour ampm
+{ if ($1 > 11*60) yyerror("Hour out of range");
+$$ = $1 + $2;
+}
+;
+
+hour:
+
+hour_num
+{ if ($1 > 23) yyerror("Hour out of range");
+$$ = $1 * 60;
+};
+
+minute:
+
+DIGIT DIGIT
+{ $$ = $1*10 + $2;
+if ($$ > 59) yyerror( "minute out of range");
+};
+
+ampm:
+
+AM
+
+{ $$ = AM_MINS; }
+
+| PM
+
+{ $$ = PM_MINS; }
+
+;
+hour_num: DIGIT
+| DIGIT DIGIT
+
+{ $$ = $1; }
+{ $$ = $1*10 + $2; }
+
+;
+
+Exercise
+8:
+
+Answer
+8:
+
+from Domain Languages
+Implement the time parser using Perl. [Hint: Regular
+expressions make good parsers.]
+
+$_ = shift;
+/^(\d\d?)(am|pm)$/
+
+&& doTime ($1, 0, $2, 12);
+
+/^(\d\d?):(\d\d)(am|pm)$/ && doTime($l, $2, $3, 12);
+/^(\d\d?):(\d\d)$/
+
+&& doTime($l, $2, 0, 24);
+
+die "Invalid time $_\n";
+#
+# doTime(hour, min, ampm, maxHour)
+#
+sub doTime($$$$) {
+my ($hour, $min, $offset, $maxHour) = @_;
+die "Invalid hour: $hour" if ($hour >= $maxHour);
+$hour += 12 if ($offset eq "pm");
+print $hour*60 + $min, " minutes past midnight\n";
+exit(0);
+}
+
+Exercise
+9:
+
+from Estimating
+
+Answer
+9:
+
+Our answer must be couched in several assumptions:
+
+You are asked "Which has a higher bandwidth: a 1Mbps
+communications line or a person walking between two
+computers with a full 4GB tape in their pocket?" What
+constraints will you put on your answer to ensure that the scope
+of your response is correct? (For example, you might say that the
+time taken to access the tape is ignored.)
+
+•
+•
+•
+
+The tape contains the information we need to be
+transferred.
+We know the speed at which the person walks.
+We know the distance between the machines.
+
+We are not accounting for the time it takes to transfer
+information to and from the tape.
+The overhead of storing data on a tape is roughly equal to
+the overhead of sending it over a communications line.
+
+•
+•
+
+Exercise
+10:
+
+from Estimating
+
+Answer
+10:
+
+Subject to the caveats in Answer 9: A 4GB tape contains 32 × 109
+bits, so a 1Mbps line would have to pump data for about 32,000
+seconds, or roughly 9 hours, to transfer the equivalent amount
+of information. If the person is walking at a constant 3½ mph,
+then our two machines would need to be at least 31 miles apart
+for the communications line to outperform our courier.
+Otherwise, the person wins .
+
+Exercise
+11:
+
+from Text Manipulation
+
+So, which has the higher bandwidth?
+
+Your C program uses an enumerated type to represent one of
+100 states. You'd like to be able to print out the state as a string
+(as opposed to a number) for debugging purposes. Write a script
+that reads from standard input a file containing
+
+name
+state_a
+state_b
+:
+
+:
+
+Produce the file name.h, which contains
+
+extern const char* NAME_names[];
+typedef enum {
+state_a,
+state_b,
+:
+
+:
+
+} NAME;
+
+and the file name.c, which contains
+
+const char* NAME_names[] = {
+"state_a",
+"state_b",
+:
+
+:
+
+};
+
+Answer
+11:
+
+We implemented our answer using Perl.
+
+my @consts;
+my $name = <>;
+die "Invalid format - missing name" unless defined($name);
+chomp Sname;
+# Read in the rest of the file
+while (<>) {
+chomp;
+s/^\s*//; s/\s*$//;
+die "Invalid line: $_" unless /^(\w+)$/;
+push @consts, $_;
+}
+# Now generate the file
+open(HDR, ">$name.h") or die "Can't open $name.h: $!";
+open(SRC, ">$name.c") or die "Can't open $name. c: $! ";
+my $uc_name = uc($name);
+my $array_name = $uc_name . "_names";
+print HDR "/* file generated automatically - do not edit
+*/\n";
+print HDR "extern const char *$ {uc_name}_name[];";
+print HDR "typedef enum {\n ";
+print HDR join ",\n ", @consts;
+print HDR "\n} $uc_name;\n\n";
+print SRC "/* File generated automatically - do not edit
+*/\n";
+print SRC "const char *$ {uc_name}_name[] = {\n \"";
+print SRC join "\",\n \"", @consts;
+print SRC "\"\n};\n" ;
+close(SRC);
+close(HDR);
+
+Using the DRY principle, we won't cut and paste this new file into
+our code. Instead, we'll #include it—the flat file is the master source
+of these constants. This means that we'll need a makefile to
+regenerate the header when the file changes. The following extract
+is from the test bed in our source tree (available on the Web site).
+etest.c etest.h:
+
+etest.inc enumerated.pl
+perl enumerated.pl etest.inc
+
+Exercise
+12:
+
+from Text Manipulation
+Halfway through writing this book, we realized that we hadn't
+put the use strict directive into many of our Perl examples.
+Write a script that goes through the .pl files in a directory and
+adds a use strict at the end of the initial comment block to all
+files that don't already have one. Remember to keep a backup of
+all files you change.
+
+Answer
+12:
+
+Here's our answer, written in Perl.
+
+my $dir = shift or die "Missing directory";
+for my $file (glob("$dir/*.pl")) {
+open(IP, "$file") or die "Opening $file: $! ";
+undef $/;
+
+# Turn off input record separator --
+
+my $content = <IP>; # read whole file as one string.
+close(IP);
+if ($content !~ /^use strict/m) {
+rename $file, "$file.bak" or die "Renaming $file: $!";
+open(OP,">$file") or die "Creating $file: $! ";
+# Put 'use strict' on first line that
+# doesn't start '#'
+$content =~ s/^(?!#)/\nuse strict;\n\n/m;
+print OP $content;
+close(OP);
+print "Updated $file\n";
+}
+else {
+print "$file already strict\n";
+}
+}
+
+Exercise
+13:
+
+from Code Generators
+
+Write a code generator that takes the input file in Figure 3.4,
+and generates output in two languages of your choice. Try to
+make it easy to add new languages.
+Answer
+13:
+
+We use Perl to implement our solution. It dynamically loads a
+module to generate the requested language, so adding new
+languages is easy. The main routine loads the back end (based
+on a command-line parameter), then reads its input and calls
+code generation routines based on the content of each line. We're
+not particularly fussy about error handling—we'll get to know
+pretty quickly if things go wrong.
+
+my $lang = shift or die "Missing language";
+$lang .= "_cg.pm";
+require "$lang" or die "Couldn't load $lang";
+# Read and parse the file
+my $name;
+while (<>) {
+chomp;
+if (/^\s*S/)
+
+{ CG::blankLine(); }
+
+elsif (/^\#(.*)/)
+
+{ CG::comment($1); }
+
+elsif (/^M\s*(.+)/) { CG::startMsg($l); $name = $1; }
+elsif c/^E/)
+
+{ CG::endMsg($name); }
+
+elsif (/^F\s*(\w+)$/)
+{ CG::simpleType($l,$2); }
+elsif (/^F\s*(\w+)\s+(\w+)\[(\d+)\]$/)
+{ CG::arrayType($l,$2,$3); }
+else {
+die "Invalid line: $_";
+}
+}
+
+Writing a language back end is simple: provide a module that
+implements the required six entry points. Here's the C generator:
+
+#!/usr/bin/perl -w
+package CG;
+use strict;
+# Code generator for 'C' (see cg_base.pl)
+sub blankLine() { print "\n"; }
+sub comment()
+
+{ print "/*$_[0] */\n"; }
+
+sub startMsg()
+
+{ print "typedef struct {\n"; }
+
+sub endMsg()
+
+{ print "} $_[0];\n\n"; }
+
+sub arrayType() {
+my ($name, $type, $size) = @_;
+print " $type $name\[$size];\n";
+}
+sub simpleType() {
+my ($name, $type) = @_;
+print "
+
+$type $name;\n";
+
+}
+1;
+
+And here's the one for Pascal:
+#!/usr/bin/perl -w
+package CG;
+use strict;
+# Code generator for 'Pascal' (see cg_base.pl)
+sub blankLine() { print "\n"; }
+sub comment()
+
+{ print "{$_[0] }\n"; }
+
+sub startMsg()
+
+{ print "$_[0] = packed record\n"; }
+
+sub endMsg()
+
+{ print "end;\n\n"; }
+
+sub arrayType() {
+my ($name, $type, $size) = @_;
+$size--;
+print " $name: array[0..$size] of $type;\n";
+}
+sub simpleType() {
+my ($name, $type) = @_;
+print " $name: $type;\n";
+}
+1;
+
+Exercise
+14:
+
+from Design by Contract
+What makes a good contract? Anyone can add preconditions and
+postconditions, but will they do you any good? Worse yet, will
+they actually do more harm than good? For the example below
+and for those in Exercises 15 and 16, decide whether the
+specified contract is good, bad, or ugly, and explain why.
+First, let's look at an Eiffel example. Here we have a routine for
+adding a STRING to a doubly linked, circular list (remember that
+preconditions are labeled with require, and postconditions with
+
+ensure).
+
+-- Add an item to a doubly linked list,
+-- and return the newly created NODE.
+add_item (item : STRING) : NODE is
+require
+item /= Void
+
+-- '/=' is 'not
+
+find_item(item) = Void
+
+-- Must be unique
+
+equal'.
+deferred
+
+-- Abstract base class.
+
+ensure
+result.next.previous = result -- Cheek the newly
+result.previous.next = result -- added node's links.
+find_item(item) = result
+
+-- Should find it.
+
+end
+
+Answer
+14:
+
+This Eiffel example is good. We require non-null data to be
+passed in, and we guarantee that the semantics of a circular,
+doubly linked list are honored. It also helps to be able to find the
+string we stored. Because this is a deferred class, the actual
+class that implements it is free to use whatever underlying
+mechanism it wants to. It may choose to use pointers, or an
+array, or whatever; as long as it honors the contract, we don't
+care .
+
+Exercise
+15:
+
+from Design by Contract
+Next, let's try an example in Java—somewhat similar to the
+example in Exercise 14. insertNumber inserts an integer into an
+ordered list. Pre- and postconditions are labeled as in iContract
+(see [URL 17]).
+
+private int data[];
+/**
+* @post data[index-l] < data[index] &&
+*
+
+data[index] == aValue
+
+*/
+public Node insertNumber (final int aValue)
+{
+int index = findPlaceToInsert(aValue);
+...
+
+Answer
+15:
+
+This is bad. The math in the index clause (index-1) won't work
+on boundary conditions such as the first entry .
+The postcondition assumes a particular implementation: we
+want contracts to be more abstract than that.
+
+Exercise
+16:
+
+from Design by Contract
+Here's a fragment from a stack class in Java. Is this a good
+contract?
+
+/**
+* @pre anItem != null
+
+// Require real data
+
+* @post pop() == anItem // Verify that it's
+*
+
+// on the stack
+
+*/
+public void push(final String anItem)
+
+Answer
+16:
+
+It's a good contract, but a bad implementation. Here, the
+infamous "Heisenbug" [URL 52] rears its ugly head. The
+programmer probably just made a simple typo—pop instead of
+top. While this is a simple and contrived example, side effects in
+assertions (or in any unexpected place in the code) can be very
+difficult to diagnose .
+
+Exercise
+17:
+
+from Design by Contract
+The classic examples of DEC (as in Exercises 14–16) show an
+implementation of an ADT (Abstract Data Type)—typically a
+stack or queue. But not many people really write these kinds of
+low-level classes.
+So, for this exercise, design an interface to a kitchen blender. It
+will eventually be a Web-based, Internet-enabled, CORBA-fled
+blender, but for now we just need the interface to control it. It
+has ten speed settings (0 means off). You can't operate it empty,
+and you can change the speed only one unit at a time (that is,
+from 0 to 1, and from 1 to 2, not from 0 to 2).
+Here are the methods. Add appropriate pre- and postconditions
+and an invariant.
+
+int getSpeed()
+void setSpeed(int x)
+boolean isFull()
+void fill()
+void empty()
+
+Answer
+17:
+
+We'll show the function signatures in Java, with the pre- and
+postconditions labeled as in iContract.
+First, the invariant for the class:
+
+/**
+* @invariant getSpeed() > 0
+*
+
+implies isFull()
+
+// Don't run empty
+
+* @invariant getSpeed() >= 0 &&
+*
+
+getSpeed() < 10
+
+// Range check
+
+*/
+
+Next, the pre- and postconditions:
+/**
+* @pre Math.abs(getSpeed() - x) <= 1 // Only change by
+one
+* @pre x >= 0 && x < 10
+
+// Range check
+
+* @post getSpeed() == x
+
+// Honor requested
+
+speed
+*/
+public void setSpeed(final int x)
+/**
+* @pre !isFull()
+
+// Don't fill it
+
+* @post isFull()
+
+// Ensure it was
+
+twice
+done
+*/
+void fill()
+/**
+* @pre isFull()
+
+// Don't empty it
+
+twice
+* @post !isFull()
+*/
+void empty()
+
+// Ensure it was done
+
+Exercise
+18:
+
+from Design by Contract
+How many numbers are in the series 0,5,10,15,…, 100?
+
+Answer
+18:
+
+There are 21 terms in the series. If you said 20, you just
+experienced a fencepost error.
+
+Exercise
+19:
+
+from Assertive Programming
+A quick reality check. Which of these "impossible" things can
+happen?
+1. A month with fewer than 28 days
+2. stat("." ,&sb) == -1 (that is, can't access the current
+directory)
+3. In C++: a=2;b=3; if (a+b!=5) exit(l);
+4. A triangle with an interior angle sum ? 180°
+5. A minute that doesn't have 60 seconds
+6. In Java: (a + 1) <= a
+
+Answer
+19:
+
+Exercise
+20:
+
+1. September, 1752 had only 19 days. This was done to
+synchronize calendars as part of the Gregorian
+Reformation.
+2. The directory could have been removed by another
+process, you might not have permission to read it, &sb
+might be invalid—you get the picture.
+3. We sneakily didn't specify the types of a and b. Operator
+overloading might have defined +, =, or ! = to have
+unexpected behavior. Also, a and b may be aliases for the
+same variable, so the second assignment will overwrite
+the value stored in the first.
+4. In non-Euclidean geometry, the sum of the angles of a
+triangle will not add up to 180°. Think of a triangle
+mapped on the surface of a sphere.
+5. Leap minutes may have 61 or 62 seconds.
+6. Overflow may leave the result of a + 1 negative (this can
+also happen in C and C++).
+
+from Assertive Programming
+Develop a simple assertion checking class for Java.
+
+Answer
+20:
+
+We chose to implement a very simple class with a single static
+method, TEST, that prints a message and a stack trace if the
+passed condition parameter is false .
+
+package com.pragprog.util;
+import java.lang.System;
+
+// for exit()
+
+import java.lang.Thread;
+
+// for dumpStack()
+
+public class Assert {
+/** Write a message, print a stack trace and exit if
+* our parameter is false.
+*/
+public static void TEST(boolean condition) {
+if (!condition) {
+System.out.println("==== Assertion Failed ====");
+Thread.dumpStack();
+System.exit(l);
+}
+}
+// Testbed. If our argument is 'okay', try an assertion
+that
+// succeeds, if 'fail' try one that fails
+public static final void main(String args[]) {
+if (args[0].compareTo("okay") == 0) {
+TEST(1 == 1);
+}
+else if (args[0].compareTo("fail") == 0) {
+TEST(1 == 2);
+}
+else {
+throw new RuntimeExceptionC "Bad argument");
+}
+}
+}
+
+Exercise
+21:
+
+from When to Use Exceptions
+While designing a new container class, you identify the
+following possible error conditions:
+1. No memory available for a new element in the add routine
+2. Requested entry not found in the fetch routine
+
+3. null pointer passed to the add routine
+How should each be handled? Should an error be generated,
+should an exception be raised, or should the condition be
+ignored?
+Answer
+21:
+
+Running out of memory is an exceptional condition, so we feel
+that case (1) should raise an exception.
+Failure to find an entry is probably quite a normal occurrence.
+The application that calls our collection class may well write
+code that checks to see if an entry is present before adding a
+potential duplicate. We feel that case (2) should just return an
+error.
+Case (3) is more problematic—if the value null is significant to
+the application, then it may be justifiably added to the
+container. If, however, it makes no sense to store null values, an
+exception should probably be thrown.
+
+Exercise
+22:
+
+from How to Balance Resources
+
+Answer
+22:
+
+In most C and C++ implementations, there is no way of checking
+that a pointer actually points to valid memory. A common
+mistake is to deallocate a block of memory and reference that
+memory later in the program. By then, the memory pointed to
+may well have been reallocated to some other purpose. By
+setting the pointer to NULL, the programmers hope to prevent
+these rogue references—in most cases, dereferencing a NULL
+pointer will generate a runtime error .
+
+Exercise
+23:
+
+from How to Balance Resources
+
+Some C and C++ developers make a point of setting a pointer to
+NULL after they deallocate the memory it references. Why is this
+a good idea?
+
+Some Java developers make a point of setting an object variable
+to NULL after they have finished using the object. Why is this a
+good idea?
+Answer
+23:
+
+By setting the reference to NULL, you reduce the number of
+pointers to the referenced object by one. Once this count reaches
+
+zero, the object is eligible for garbage collection. Setting the
+references to NULL can be significant for long-running programs,
+where the programmers need to ensure that memory utilization
+doesn't increase over time .
+Exercise
+24:
+
+from Decoupling and the Law of Demeter
+We discussed the concept of physical decoupling in the box .
+Which of the following C++ header files is more tightly coupled
+to the rest of the system?
+person1.h:
+
+person2.h:
+
+#include
+
+class Date;
+
+"date.h"
+
+class Person2 {
+
+class Personl {
+
+private:
+
+private:
+Date myBirthdate;
+public:
+Person1(Date &birthDate);
+
+Date *myBirthdate;
+public:
+Person2(Date &birthDate);
+//...
+
+//...
+
+Answer
+24:
+
+A header file is supposed to define the interface between the
+corresponding implementation and the rest of the world. The
+header file itself has no need to know about the internals of the
+Date class—it merely needs to tell the compiler that the
+constructor takes a Date as a parameter. So, unless the header
+file uses Dates in inline functions, the second snippet will work
+fine .
+What's wrong with the first snippet? On a small project, nothing,
+except that you are unnecessarily making everything that uses a
+Personl class also include the header file for Date. Once this kind
+of usage gets common in a project, you soon find that including
+one header file ends up including most of the rest of the
+system—a serious drag on compilation times.
+
+Exercise
+25:
+
+from Decoupling and the Law of Demeter
+For the example below and for those in Exercises 26 and 27,
+determine if the method calls shown are allowed according to the
+Law of Demeter. This first one is in Java.
+
+public void showBalance(BankAccount acct) {
+Money amt = acct. getBalance() ;
+printToScreen(amt .printFormat()) ;
+}
+
+Answer
+25:
+
+The variable acct is passed in as a parameter, so the getBalance
+call is allowed. Calling amt.printFormat(), however, is not. We
+don't "own" amt and it wasn't passed to us. We could eliminate
+showBalance's coupling to Money with something like this :
+
+void showBalance(BankAccount b) {
+b.printBalance();
+}
+
+Exercise
+26:
+
+from Decoupling and the Law of Demeter
+This example is also in Java.
+
+public class Colada {
+private Blender myBlender;
+private Vector myStuff;
+public Colada() {
+myBlender = new Blender();
+myStuff = new Vector() ;
+}
+private void doSomething() {
+myBlender.addlngredients(myStuff.elements());
+}
+}
+
+Answer
+26:
+
+Since Colada creates and owns both myBlender and myStuff, the
+calls to addIngredients and elements are allowed .
+
+Exercise
+27:
+
+from Decoupling and the Law of Demeter
+This example is in C++.
+
+void processTransaction(BankAccount acct, int) {
+Person *who;
+Money amt;
+amt.setValue(123.45);
+
+acct.setBalance(amt);
+who = acct .getOwner() ;
+markWorkflow(who->name(), SET_BALANCE);
+}
+
+Answer
+27:
+
+In this case, processTransaction owns amt—it is created on the
+stack, acct is passed in, so both setValue and setBalance are
+allowed. But processTransaction does not own who, so the call
+who->name() is in violation. The Law of Demeter suggests
+replacing this line with
+
+markWorkflow(acct.name(), SET_BALANCE);
+
+The code in processTransaction should not have to know which
+subobject within a BankAccount holds the name—this structural
+knowledge should not show through BankAccount's contract.
+Instead, we ask the BankAccount for the name on the account. It
+knows where it keeps the name (maybe in a Person, in a Business,
+or in a polymorphic Customer object).
+Exercise
+28:
+
+from Metaprogramming
+Which of the following things would be better represented as
+code within a program, and which externally as metadata?
+1. Communication port assignments
+2. An editor's support for highlighting the syntax of various
+languages
+3. An editor's support for different graphic devices
+4. A state machine for a parser or scanner
+5. Sample values and results for use in unit testing
+
+Answer
+28:
+
+There are no definitive answers here—the questions were
+intended primarily to give you food for thought. However, this is
+what we think:
+1. Communication port assignments. Clearly, this
+information should be stored as metadata. But to what
+level of detail? Some Windows communications programs
+let you select only baud rate and port (say COM1 to COM4).
+But perhaps you need to specify word size, parity, stop
+bits, and the duplex setting as well. Try to allow the finest
+level of detail where practical.
+
+2. An editor's support for highlighting the syntax of various
+languages. This should be implemented as metadata.
+You wouldn't want to have to hack code just because the
+latest version of Java introduced a new keyword.
+3. An editor's support for different graphic devices. This
+would probably be difficult to implement strictly as
+metadata. You would not want to burden your application
+with multiple device drivers only to select one at runtime.
+You could, however, use metadata to specify the name of
+the driver and dynamically load the code. This is another
+good argument for keeping the metadata in a
+human-readable format; if you use the program to set up
+a dysfunctional video driver, you may not be able to use
+the program to set it back.
+4. A state machine for a parser or scanner. This depends
+on what you are parsing or scanning. If you are parsing
+some data that is rigidly defined by a standards body and
+is unlikely to change without an act of Congress, then
+hard coding it is fine. But if you are faced with a more
+volatile situation, it may be beneficial to define the state
+tables externally.
+5. Sample values and results for use in unit testing. Most
+applications define these values inline in the testing
+harness, but you can get better flexibility by moving the
+test data—and the definition of the acceptable
+results—out of the code itself.
+
+Exercise
+29:
+
+from It's Just a View
+Suppose you have an airline reservation system that includes
+the concept of a flight:
+
+public interface Flight {
+// .Return false if flight full.
+public boolean addPassenger(Passenger p);
+public void addToWaitList(Passenger p);
+public int getFlightCapacity();
+public int getNumPassengers();
+}
+
+If you add a passenger to the wait list, they'll be put on the flight
+
+automatically when an opening becomes available.
+There's a massive reporting job that goes through looking for
+overbooked or full flights to suggest when additional flights
+might be scheduled. It works fine, but it takes hours to run.
+We'd like to have a little more flexibility in processing wait-list
+passengers, and we've got to do something about that big
+report—it takes too long to run. Use the ideas from this section
+to redesign this interface.
+Answer
+29:
+
+We'll take Flight and add some additional methods for
+maintaining two lists of listeners: one for wait-list notification,
+and the other for full-flight notification .
+
+public interface Passenger {
+public void waitListAvailable();
+}
+public interface Flight {
+...
+public void addWaitListListener(Passenger p);
+public void removeWaitListListener(Passenger p);
+public void addFullListener(FullListener b);
+public void removeFullListener(FullListener b);
+...
+}
+public interface BigReport extends FullListener {
+public void FlightFullAlert(Flight f);
+}
+
+If we try to add a Passenger and fail because the flight is full, we can,
+optionally, put the Passenger on the wait list. When a spot opens up,
+waitList-Available will be called. This method can then choose to
+add the Passenger automatically, or have a service representative
+call the customer to ask if they are still interested, or whatever. We
+now have the flexibility to perform different behaviors on a
+per-customer basis.
+Next, we want to avoid having the BigReport troll through tons of
+records looking for full flights. By having BigReport registered as a
+listener on Flights, each individual Flight can report when it is
+full—or nearly full, if we want. Now users can get live,
+up-to-the-minute reports from BigReport instantly, without waiting
+
+hours for it to run as it did previously.
+Exercise
+30:
+
+from Blackboards
+For each of the following applications, would a blackboard
+system be appropriate or not? Why?
+1. Image processing. You'd like to have a number of
+parallel processes grab chunks of an image, process them,
+and put the completed chunk back.
+2. Group calendaring. You've got people scattered across
+the globe, in different time zones, and speaking different
+languages, trying to schedule a meeting.
+3. Network monitoring tool. The system gathers
+performance statistics and collects trouble reports. You'd
+like to implement some agents to use this information to
+look for trouble in the system.
+
+Answer
+30:
+
+1. Image processing. For simple scheduling of a workload
+among the parallel processes, a shared work queue may
+be more than adequate. You might want to consider a
+blackboard system if there is feedback involved—that is,
+if the results of one processed chunk affect other chunks,
+as in machine vision applications, or complex 3D
+image-warp transforms.
+2. Group calendaring. This might be a good fit. You can
+post scheduled meetings and availability to the
+blackboard. You have entities functioning autonomously,
+feedback from decisions is important, and participants
+may come and go.
+You might want to consider partitioning this kind of
+blackboard system depending on who is searching: junior
+staff may care about only the immediate office, human
+resources may want only English-speaking offices
+worldwide, and the CEO may want the whole enchilada.
+There is also some flexibility on data formats: we are free
+to ignore formats or languages we don't understand. We
+have to understand different formats only for those offices
+that have meetings with each other, and we do not need
+to expose all participants to a full transitive closure of all
+possible formats. This reduces coupling to where it is
+
+necessary, and does not constrain us artificially.
+3. Network monitoring tool. This is very similar to the
+mortgage/loan application program described. You've got
+trouble reports sent in by users and statistics reported
+automatically, all posting to the blackboard. A human or
+software agent can analyze the blackboard to diagnose
+network failures: two errors on a line might just be cosmic
+rays, but 20,000 errors and you've got a hardware
+problem. Just as the detectives solve the murder mystery,
+you can have multiple entities analyzing and contributing
+ideas to solve the network problems.
+
+Exercise
+31:
+
+from Programming by Coincidence
+Can you identify some coincidences in the following C code
+fragment? Assume that this code is buried deep in a library
+routine.
+
+fprintf (stderr, "Error, continue?");
+gets(buf);
+
+Answer
+31:
+
+There are several potential problems with this code. First, it
+assumes a tty environment. That may be fine if the assumption
+is true, but what if this code is called from a GUI environment
+where neither stderr nor stdin is open ?
+Second, there is the problematic gets, which will write as many
+characters as it receives into the buffer passed in. Malicious
+users have used this failing to create buffer overrun security
+holes in many different systems. Never use gets().
+Third, the code assumes the user understands English.
+Finally, no one in their right mind would ever bury user
+interaction such as this in a library routine.
+
+Exercise
+32:
+
+from Programming by Coincidence
+This piece of C code might work some of the time, on some
+machines. Then again, it might not. What's wrong?
+
+/* Truncate string to its last maxlen chars */
+void string_tail(char *string, int maxlen) {
+int len = strlen(string);
+if (len > maxlen) {
+strcpy(string, string + (len - maxlen));
+}
+}
+
+Answer
+32:
+
+POSIX strcpy isn't guaranteed to work for overlapping strings.
+It might happen to work on some architectures, but only by
+coincidence .
+
+Exercise
+33:
+
+from Programming by Coincidence
+This code comes from a general-purpose Java tracing suite. The
+function writes a string to a log file. It passes its unit test, but
+fails when one of the Web developers uses it. What coincidence
+does it rely on?
+
+public static void debug(String s) throws IOException {
+FileWriter fw = new FileWriter("debug.log", true);
+fw.write(s);
+fw.flush() ;
+fw.close() ;
+}
+
+Answer
+33:
+
+It won't work in an applet context with security restrictions
+against writing to the local disk. Again, when you have a choice
+of running in GUI contexts or not, you may want to check
+dynamically to see what the current environment is like. In this
+case, you may want to put a log file somewhere other than the
+local disk if it isn't accessible.
+
+Exercise
+34:
+
+from Algorithm Speed
+We have coded a set of simple sort routines, which can be
+downloaded from our Web site
+(http://www.pragmaticprogrammer.com). Run them on various
+machines available to you. Do your figures follow the expected
+curves? What can you deduce about the relative speeds of your
+machines? What are the effects of various compiler optimization
+settings? Is the radix sort indeed linear?
+
+Answer
+34:
+
+Clearly, we can't give any absolute answers to this exercise.
+However, we can give you a couple of pointers.
+If you find that your results don't follow a smooth curve, you
+might want to check to see if some other activity is using some of
+your processor's power. You probably won't get good figures on a
+multiuser system, and even if you are the only user you may find
+that background processes periodically take cycles away from
+your programs. You might also want to check memory: if the
+application starts using swap space, performance will nose dive.
+It is interesting to experiment with different compilers and
+different optimization settings. We found some that pretty
+startling speed-ups were possible by enabling aggressive
+optimization. We also found that on the wider RISC
+architectures the manufacturer's compilers often outperformed
+the more portable GCC. Presumably, the manufacturer is privy
+to the secrets of efficient code generation on these machines.
+
+Exercise
+35:
+
+from Algorithm Speed
+The routine below prints out the contents of a binary tree.
+Assuming the tree is balanced, roughly how much stack space
+will the routine use while printing a tree of 1,000,000 elements?
+(Assume that subroutine calls impose no significant stack
+overhead.)
+
+void printTree(const Node *node) {
+char buffer[1000];
+if (node) {
+printTree(node->left);
+getNodeAsString(node, buffer);
+puts(buffer);
+printTree(node->right);
+}
+}
+
+Answer
+35:
+
+The printTree routine uses about 1,000 bytes of stack space for
+the buffer variable. It calls itself recursively to descend through
+the tree, and each nested call adds another 1,000 bytes to the
+stack. It also calls itself when it gets to the leaf nodes, but exits
+immediately when it discovers that the pointer passed in is
+
+NULL. If the depth of the tree is D, the maximum stack
+
+requirement is therefore roughly 1000 x (D + 1) .
+A balanced binary tree holds twice as many elements at each
+level. A tree of depth D holds 1 + 2+4+8 + … + 2D–1), or 2D–1,
+elements. Our million-element tree will therefore need |
+lg(l,000,001) |, or 20 levels.
+We'd therefore expect our routine to use roughly 21,000 bytes of
+stack.
+Exercise
+36:
+
+from Algorithm Speed
+Can you see any way to reduce the stack requirements of the
+routine in Exercise 35 (apart from reducing the size of the
+buffer)?
+
+Answer
+36:
+
+A couple of optimizations come to mind. First, the printTree
+routine calls itself on leaf nodes, only to exit because there are no
+children. That call increases the maximum stack depth by about
+1,000 bytes. We can also eliminate the tail recursion (the second
+recursive call), although this won't affect the worst-case stack
+usage .
+
+while (node) {
+if (node->left) printTree(node->left);
+getNodeAsString(node, buffer);
+puts(buffer);
+node = node->right;
+}
+
+The biggest gain, however, comes from allocating just a single
+buffer, shared by all invocations of printTree. Pass this buffer as a
+parameter to the recursive calls, and only 1,000 bytes will be
+allocated, regardless of the depth of recursion.
+void printTreePrivate(const Node *node, char *buffer) {
+if (node) {
+printTreePrivate(node->left, buffer);
+getNodeAsString(node, buffer);
+puts(buffer);
+printTreePrivate(node->right, buffer);
+}
+
+}
+void newPrintTree(const Node *node) {
+char buffer[1000];
+printTreePrivate(node, buffer);
+}
+
+Exercise
+37:
+
+from Algorithm Speed
+
+Answer
+37:
+
+There are a couple of ways of getting there. One is to turn the
+problem on its head. If the array has just one element, we don't
+iterate around the loop. Each additional iteration doubles the
+size of the array we can search. The general formula for the
+array size is therefore n = 2m, where m is the number of
+iterations. If you take logs to the base 2 of each side, you get lg(n)
+= lg(2m), which by the definition of logs becomes lg(n) = m.
+
+Exercise
+38:
+
+from Refactoring
+
+On page 180, we claimed that a binary chop is O(lg(n)). Can you
+prove this?
+
+The following code has obviously been updated several times
+over the years, but the changes haven't improved its structure.
+Refactor it.
+
+if (state == TEXAS) {
+rate = TX_RATE;
+amt = base * TX_RATE;
+calc = 2*basis(amt) + extra(amt)*1.05;
+}
+else if ((state == OHIO) || (state == MAINE)) {
+rate = (state == OHIO) ? OH_RATE : MN_RATE;
+amt = base * rate;
+calc = 2*basis(amt) + extra(amt)*1.05;
+if (state == OHIO)
+points = 2;
+}
+else {
+rate = 1;
+amt = base;
+calc = 2*basis(amt) + extra(amt)*1.05;
+}
+
+Answer
+38:
+
+We might suggest a fairly mild restructuring here: make sure
+that every test is performed just once, and make all the
+calculations common. If the expression 2*basis(. . . ) * 1.05
+appears in other places in the program, we should probably
+make it a function. We haven't bothered here .
+We've added a rate_lookup array, initialized so that entries
+other than Texas, Ohio, and Maine have a value of 1. This
+approach makes it easy to add values for other states in the
+future. Depending on the expected usage pattern, we might
+want to make the points field an array lookup as well.
+
+rate = rate_lookup[state];
+amt = base * rate;
+calc = 2*basis(amt) + extra(amt)*1.05;
+if (state == OHIO)
+points = 2;
+
+Exercise
+39:
+
+from Refactoring
+The following Java class needs to support a few more shapes.
+Refactor the class to prepare it for the additions.
+
+public class Shape {
+public static final int SQUARE = 1;
+public static final int CIRCLE = 2;
+public static final int RIGHT_TRIANGLE = 3;
+private int
+
+shapeType;
+
+private double size;
+public Shape(int shapeType, double size) {
+this.shapeType = shapeType;
+this.size = size;
+}
+// ... other methods ...
+public double area() {
+switch (shapeType) {
+case SQUARE:
+
+return size*size;
+
+case CIRCLE:
+
+return Math.PI*size*size/4.0;
+
+case RIGHT_TRIANGLE: return size*size/2.0;
+}
+return 0;
+}
+}
+
+Answer
+39:
+
+When you see someone using enumerated types (or their
+equivalent in Java) to distinguish between variants of a type,
+you can often improve the code by subclassing:
+
+public class Shape {
+private double size;
+public Shape(double size) {
+this.size = size;
+}
+public double getSize() { return size; }
+}
+public class Square extends Shape {
+public Square(double size) {
+super(size);
+}
+public double area() {
+double size = getSize() ;
+return size*size;
+}
+}
+public class Circle extends Shape {
+public Circle(double size) {
+super(size);
+}
+public double area() {
+double size = getSize();
+return Math.PI*size*size/4.0;
+}
+}
+// etc...
+
+Exercise
+40:
+
+from Refactoring
+This Java code is part of a framework that will be used
+throughout your project. Refactor it to be more general and
+easier to extend in the future.
+
+public class Window {
+public Window(int width, int height) { ... }
+public void setSize(int width, int height) { ... }
+public boolean overlaps(Window w) { ... }
+public int getArea() { . . . }
+}
+
+Answer
+40:
+
+This case is interesting. At first sight, it seems reasonable that a
+window should have a width and a height. However, consider
+the future. Let's imagine that we want to support arbitrarily
+shaped windows (which will be difficult if the Window class knows
+all about rectangles and their properties) .
+We'd suggest abstracting the shape of the window out of the
+Window class itself.
+
+public abstract class Shape {
+// ...
+public abstract boolean overlaps(Shape s);
+public abstract int getArea();
+}
+public class Window {
+private Shape shape;
+public Window(Shape shape) {
+this.shape = shape;
+...
+}
+public void setShape(Shape shape) {
+this.shape = shape;
+...
+}
+public boolean overlaps(Window w) {
+return shape.overlaps(w.shape);
+}
+public int getArea() {
+return shape.getArea();
+}
+}
+
+Note that in this approach we've used delegation rather than
+subclassing: a window is not a "kind-of'' shape—a window "has-a"
+
+shape. It uses a shape to do its job. You'll often find delegation
+useful when refactoring.
+We could also have extended this example by introducing a Java
+interface that specified the methods a class must support to support
+the shape functions. This is a good idea. It means that when you
+extend the concept of a shape, the compiler will warn you about
+classes that you have affected. We recommend using interfaces
+this way when you delegate all the functions of some other class.
+Exercise
+41:
+
+from Code That's Easy to Test
+Design a test jig for the blender interface described in the
+answer to Exercise 17. Write a shell script that will perform a
+regression test for the blender. You need to test basic
+functionality, error and boundary conditions, and any
+contractual obligations. What restrictions are placed on
+changing the speed? Are they being honored?
+
+Answer
+41:
+
+First, we'll add a main to act as a unit test driver. It will accept a
+very small, simple language as an argument: "E" to empty the
+blender, "F" to fill it, digits 0-9 to set the speed, and so on .
+
+public static void main(String args[]) {
+// Create the blender to test
+dbc_ex blender = new dbc_ex();
+// And test it according to the string on standard input
+try {
+int a;
+char c;
+while ((a = System.in.read()) != -1) {
+c = (char)a;
+if (Character.isWhitespace(c)) {
+continue;
+}
+if (Character.isDigit(c)) {
+blender.setSpeed(Character.digit(c, 10));
+}
+else {
+switch (c) {
+
+case 'F': blender.fill();
+break;
+case 'E': blender.empty();
+break;
+case 's': System.out.println("SPEED: " +
+blender.getSpeed());
+break;
+case 'f': System out.println("FULL " +
+blender.
+isFull());
+break;
+default: throw new RuntimeException(
+"Unknown Test directive");
+}
+}
+}
+}
+catch (java.io.IOException e) {
+System.err.println("Test jig failed: " +
+e.getMessage());
+}
+System.err .println("Completed blending\n");
+System.exit(0);
+}
+
+Next comes the shell script to drive the tests.
+
+#!/bin/sh
+CMD="java dbc.dbc_ex"
+failcount=0
+expect_okay() {
+if echo "$*" | $CMD #>/dev/null 2>&1
+then
+:
+else
+echo "FAILED! $*"
+failcount='expr $failcount + 1'
+fi
+}
+expect_fail() {
+if echo "$*" | $CMD >/dev/null 2>&1
+then
+
+echo "FAILED! (Should have failed): $*"
+failcount='expr $failcount + 1'
+fi
+}
+report() {
+if [ $failcount -gt 0 ]
+then
+echo -e "\n\n*** FAILED $failcount TESTS\n"
+exit 1 # In case we are part of something larger
+else
+exit 0 # In case we are part of something larger
+fi
+}
+#
+# Start the tests
+#
+expect_okay F123456789876543210E # Should run thru
+expect_fail F5
+
+# Fails, speed too high
+
+expect_fail1
+
+# Fails, empty
+
+expect_fail F10E1 # Fails, empty
+expect_fail F1238 # Fails, skips
+expect_okay FE
+
+# Never turn on
+
+expect_fail F1E
+
+# Emptying while running
+
+expect_okay F10E
+
+Should be ok
+
+report
+
+# Report results
+
+The tests check to see if illegal speed changes are detected, if you
+try to empty the blender while running, and so on. We put this in the
+makefile so we can compile and run the regression test by simply
+typing
+
+% make
+% make test
+
+Note that we have the test exit with 0 or 1 so we can use this as part
+of a larger test as well.
+There was nothing in the requirements that spoke of driving this
+component via a script, or even using a language. End users will
+never see it. But we have a powerful tool that we can use to test our
+code, quickly and exhaustively.
+
+Exercise
+42:
+
+from The Requirements Pit
+Which of the following are probably genuine requirements? Restate those
+that are not to make them more useful (if possible).
+1. The response time must be less than 500 ms.
+2. Dialog boxes will have a gray background.
+3. The application will be organized as a number of front-end
+processes and a back-end server.
+4. If a user enters non-numeric characters in a numeric field, the
+system will beep and not accept them.
+5. The application code and data must fit within 256kB.
+
+Answer
+42:
+
+1. This statement sounds like a real requirement: there may be
+constraints placed on the application by its environment.
+2. Even though this may be a corporate standard, it isn't a
+requirement. It would be better stated as "The dialog background
+must be configurable by the end user. As shipped, the color will be
+gray." Even better would be the broader statement "All visual
+elements of the application (colors, fonts, and languages) must be
+configurable by the end user."
+3. This statement is not a requirement, it's architecture. When faced
+with something like this, you have to dig deep to find out what the
+user is thinking.
+4. The underlying requirement is probably something closer to "The
+system will prevent the user from making invalid entries in fields,
+and will warn the user when these entries are made."
+5. This statement is probably a hard requirement.
+
+
