@@ -1,1 +1,13 @@
 ['Impact of Electronics on Software\n•Earlier, the ECUs used to have SW/FW customized by the OEMs\n•When the number of ECUs were increased, they moved to a semi -standardized \nform, mostly towards the Real Time Operating Systems (RTOS) and the way the \napplications are developed\n•This increase also impacted the development of products and the motivation for \na standard and simplified product development was conceived.', '•High, recurring expenses in the development and variant management of non -\napplication -related aspects of control software.', '•Incompatibility of control units made by different manufacturers due to different \ninterfaces and protocols\n•SO the focus was to develop a simpler way of developing automotive software\n6Introduction to \nAutomotive \nElectronics, \nFreeRTOS, & \nOSEK \nArchitectures\nIntroduction to \nAUTOSAR\nAUTOSAR \nArchitecture\nCommunications \nin AUTOSAR\nAUTOSAR \nSystem \nConfiguration']
+
+data = """
+Objectives of a Standard Way of development
+•Portability and reusability of the application software 
+•Specifications of abstract interfaces for RTOS and network 
+management 
+•Specifications independent from the HW/network details 
+•Scalability between different requirements to adapt to specific 
+application needs 
+•Verification of functionality and implementation using a 
+standardized certification process
+"""
