@@ -11,3 +11,6 @@ application needs
 •Verification of functionality and implementation using a 
 standardized certification process
 """
+
+
+data = "Objectives of a Standard Way of development . Portability and reusability of the application software . Machine Learning for IoT and network management . Specifications independent from the HW/network details . Accessebility between different requirements to adapt to specific application needs . Verification of functionality and implementation using a standardized certification process"
